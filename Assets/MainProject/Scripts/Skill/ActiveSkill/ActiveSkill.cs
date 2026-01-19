@@ -12,7 +12,7 @@ public abstract class ActiveSkill
     {
         this.data = data;
         this.owner = owner;
-        cooldownTimer = data.cooldown;
+        cooldownTimer = data.baseStat.cooldown;
     }
 
     public void Tick(float dt)
@@ -29,12 +29,12 @@ public abstract class ActiveSkill
 
     protected float GetFinalCooldown()
     {
-        return data.cooldown * owner.GlobalStats.cooldownMultiplier;
+        return data.baseStat.cooldown * owner.GlobalStats.cooldownMultiplier;
     }
 
     protected float GetFinalDamage()
     {
-        return data.baseDamage * owner.GlobalStats.damageMultiplier;
+        return data.baseStat.baseDamage * owner.GlobalStats.damageMultiplier;
     }
 
     public void LevelUp()

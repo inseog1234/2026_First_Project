@@ -23,9 +23,9 @@ public class BunGaeHwaSal : ActiveSkill
         p.Init(
             dir,
             GetFinalDamage(),
-            data.speed,
-            data.lifetime,
-            data.knockback
+            data.baseStat.speed,
+            data.baseStat.lifetime,
+            data.baseStat.knockback
         );
     }
 
@@ -33,7 +33,7 @@ public class BunGaeHwaSal : ActiveSkill
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(
             owner.transform.position,
-            data.range,
+            data.baseStat.range,
             LayerMask.GetMask("Enemy")
         );
 

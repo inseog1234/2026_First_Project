@@ -1,9 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum SkillType
 {
     Active,
     Passive
+}
+
+[System.Serializable]
+public struct SkillStat
+{
+    public float baseDamage;
+    public float cooldown;
+    public float lifetime;
+    public float range;
+    public float speed;
+    public float scale; // 기준 : localScale (Transform) 참고용
+    public float knockback;
 }
 
 [CreateAssetMenu(fileName = "SkillData", menuName = "Scriptable Objects/SkillData")]
@@ -20,16 +33,11 @@ public class SkillData : ScriptableObject
     public int projectileCount;
     
 
-    [Header("스킬 스탯")]
-    public float baseDamage;
-    public float cooldown;
-    public float lifetime;
-    public float range;
-    public float speed;
-    public float scale; // 기준 : localScale (Transform) 참고용
-    public float knockback;
-    
-    [Header("레벨 데이터")]
-    public int maxLevel;
+    [Header("기본 스탯")]
+    public SkillStat baseStat;
+        
+    [Header("레벨업 될 때 증가 하는 스탯")]
+    public List<SkillStat> levelUpStats;
+    public int maxLevel => levelUpStats.Count;
     // 따로 추가 구성 해야함
 }

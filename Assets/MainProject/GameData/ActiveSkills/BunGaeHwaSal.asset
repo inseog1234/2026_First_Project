@@ -13,16 +13,17 @@ MonoBehaviour:
   m_Name: BunGaeHwaSal
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skillID: 0
-  skillName: "\uBC88\uAC1C \uD654\uC0B4"
+  skillName: "\uBC88\uAC1C\uD654\uC0B4"
   type: 0
   icon: {fileID: -564504878191520670, guid: 1129030acaf763749ae61d0ca57e35f2, type: 3}
   projectilePrefab: {fileID: 4763239350691375698, guid: 6a8f0d2619904ce40a17820a1642062a, type: 3}
   projectileCount: 1
-  baseDamage: 5
-  cooldown: 2
-  lifetime: 1.5
-  range: 5
-  speed: 10
-  scale: 1
-  knockback: 1
-  maxLevel: 10
+  baseStat:
+    baseDamage: 6
+    cooldown: 1.5
+    lifetime: 1.5
+    range: 2.5
+    speed: 1
+    scale: 1
+    knockback: 1
+  levelUpStats: []
