@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -27,21 +28,12 @@ public class Enemy : Unit
     protected override void Update()
     {
         base.Update();
-        if (isDead)
-        {
-            gameObject.layer = LayerMask.NameToLayer("Default");
-            transform.rotation = Quaternion.Euler(0, 0, Mathf.LerpAngle(transform.eulerAngles.z, 180f, Time.deltaTime * 5f));
-            if (Mathf.Abs(180f - transform.eulerAngles.z) <= 70f)
-            {
-                transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, target.position.y - 8f, Time.deltaTime), transform.position.z);
-            }
-            
-            return;
-        }
+        if (isDead) return;
 
         SetMoveDirection();
         CheckContactDamage();
     }
+
 
     private void SetMoveDirection()
     {
@@ -52,8 +44,25 @@ public class Enemy : Unit
 
     public void Knockback(Vector2 dir, float force)
     {
-        _rb.AddForce(dir * force, ForceMode2D.Impulse);
+        if (isDead) return;
+
+        StopAllCoroutines(); // 기존 연출 중지 (안전)
+        StartCoroutine(KnockbackRoutine(dir, force));
     }
+
+    private IEnumerator KnockbackRoutine(Vector2 dir, float force)
+    {
+        isKnockbacking = true;
+
+        _rb.linearVelocity = Vector2.zero;
+        _rb.AddForce(dir.normalized * (force * 5f), ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(0.15f); // 넉백 유지 시간
+
+        _rb.linearVelocity = Vector2.zero;
+        isKnockbacking = false;
+    }
+
 
     private void CheckContactDamage()
     {
@@ -90,21 +99,52 @@ public class Enemy : Unit
         Hp = MaxHp;
         _MoveDirect = Vector2.zero;
 
+        transform.rotation = Quaternion.identity;
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
+
         if (_am != null)
         {
             _am.Rebind();
             _am.Update(0);
         }
-
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-        gameObject.layer = LayerMask.NameToLayer("Enemy");
     }
 
     protected override void Die()
     {
-        base.Die();
+        if (isDead) return;
 
-        // 투두(To do): 경험치 드랍
-        // ExpOrbPool.Get().Init(transform.position, expValue);
+        isDead = true;
+        _MoveDirect = Vector2.zero;
+        gameObject.layer = LayerMask.NameToLayer("Default");
+        ExpOrbPooling.Instance.DropExp(transform.position, expValue);
+        StartCoroutine(DeathSequence());
     }
+
+    private IEnumerator DeathSequence()
+    {
+        float t = 0f;
+        Vector3 startPos = transform.position;
+        Vector3 endPos = new Vector3(transform.position.x, target.position.y - 8f, transform.position.z);
+
+        float startRot = transform.eulerAngles.z;
+        float endRot = 180f;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime;
+
+            float rot = Mathf.LerpAngle(startRot, endRot, t);
+            transform.rotation = Quaternion.Euler(0, 0, rot);
+
+            transform.position = Vector3.Lerp(startPos, endPos, t);
+
+            yield return null;
+        }
+
+        // 경험치 드랍
+
+        // 풀 반환
+        EnemyPooling.Instance.Return(this);
+    }
+
 }

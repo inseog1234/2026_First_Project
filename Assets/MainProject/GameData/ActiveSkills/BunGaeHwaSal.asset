@@ -24,4 +24,5 @@ MonoBehaviour:
   range: 5
   speed: 10
   scale: 1
+  knockback: 1
   maxLevel: 10

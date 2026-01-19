@@ -7,6 +7,8 @@ public class Unit : MonoBehaviour
     protected Animator _am;
     protected Vector2 _MoveDirect;
     protected Vector2 _AtkDirect;
+    protected bool isKnockbacking;
+
 
     [SerializeField] protected float Hp;
 
@@ -53,7 +55,11 @@ public class Unit : MonoBehaviour
 
     protected virtual void Move()
     {
-        _rb.MovePosition(_rb.position + _MoveDirect.normalized * _MoveSpeed * (Time.fixedDeltaTime * 5));
+        if (isKnockbacking) return;
+
+        _rb.MovePosition(
+            _rb.position + _MoveDirect.normalized * _MoveSpeed * Time.fixedDeltaTime * 5f
+        );
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
 
