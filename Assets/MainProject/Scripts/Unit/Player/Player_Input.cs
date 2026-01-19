@@ -33,10 +33,6 @@ namespace PlayerControll
             SprintInput(value.isPressed);
         }
 
-        public void OnAttack(InputValue value)
-        {
-            AttackInput(value.isPressed);
-        }
 
         public void OnInteraction(InputValue value)
         {
@@ -73,11 +69,6 @@ namespace PlayerControll
         public void SprintInput(bool newSprintState)
         {
             sprint = newSprintState;
-        }
-
-        public void AttackInput(bool newAttackState)
-        {
-            attack = newAttackState;
         }
 
         public void InteractionInput(bool newInteraction)

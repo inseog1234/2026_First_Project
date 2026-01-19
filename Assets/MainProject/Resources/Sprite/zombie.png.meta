@@ -1,55 +1,52 @@
 fileFormatVersion: 2
-guid: 208d1c39a369e2b46aea47ac5e595f32
+guid: e80737816f759a442a9f181326df6990
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 778240012933890447
-    second: Charge_1_0
+      213: -5782521184205631276
+    second: zombie_0
   - first:
-      213: -2023402014011244658
-    second: Charge_1_1
+      213: 7424166911509628443
+    second: zombie_1
   - first:
-      213: 2118197556715995833
-    second: Charge_1_2
+      213: -2758051070605636368
+    second: zombie_2
   - first:
-      213: 4670737315312586929
-    second: Charge_1_3
+      213: 8344143291265281608
+    second: zombie_3
   - first:
-      213: 2301240640538241927
-    second: Charge_1_4
+      213: -5597760131145927102
+    second: zombie_4
   - first:
-      213: -7006168978617246428
-    second: Charge_1_5
+      213: 4886205664765569991
+    second: zombie_5
   - first:
-      213: 8233824156445280261
-    second: Charge_1_6
+      213: 1151005158744226623
+    second: zombie_6
   - first:
-      213: 9081386256978741159
-    second: Charge_1_7
+      213: -8059583146060493928
+    second: zombie_7
   - first:
-      213: 2714328131718670384
-    second: Charge_1_8
+      213: 3122531361158672230
+    second: zombie_8
   - first:
-      213: 6081995315130400053
-    second: Charge_1_9
+      213: 6599611017997144757
+    second: zombie_9
   - first:
-      213: 1379634009411790284
-    second: Charge_1_10
+      213: 195596932082337647
+    second: zombie_10
   - first:
-      213: -4732074102987161586
-    second: Charge_1_11
+      213: 9210503329416133688
+    second: zombie_11
   - first:
-      213: -1579506258708988002
-    second: Charge_1_12
+      213: -1970021832768809902
+    second: zombie_12
   - first:
-      213: -2220492470021515892
-    second: Charge_1_13
+      213: -6782413800887014021
+    second: zombie_13
   - first:
-      213: -3367030291983212274
-    second: Charge_1_14
-  - first:
-      213: -8854013128456208761
-    second: Charge_1_15
+      213: 5596614392607586749
+    second: zombie_14
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,7 +93,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 512
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -145,353 +142,353 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Charge_1_0
+      name: zombie_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 56
-        width: 57
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 1536
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f818be02b2ddcca00800000000000000
-      internalID: 778240012933890447
+      spriteID: 4d0904dbe9b50cfa0800000000000000
+      internalID: -5782521184205631276
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_1
+      name: zombie_1
       rect:
         serializedVersion: 2
-        x: 88
-        y: 55
-        width: 33
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 512
+        y: 1536
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e8fbc05b69e6be3e0800000000000000
-      internalID: -2023402014011244658
+      spriteID: b168db99870f70760800000000000000
+      internalID: 7424166911509628443
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_2
+      name: zombie_2
       rect:
         serializedVersion: 2
-        x: 151
-        y: 55
-        width: 35
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1024
+        y: 1536
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9b248248479556d10800000000000000
-      internalID: 2118197556715995833
+      spriteID: 0fc4a200a2f69b9d0800000000000000
+      internalID: -2758051070605636368
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_3
+      name: zombie_3
       rect:
         serializedVersion: 2
-        x: 206
-        y: 56
-        width: 44
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1536
+        y: 1536
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1b05e5677dac1d040800000000000000
-      internalID: 4670737315312586929
+      spriteID: 84e63de3d1a5cc370800000000000000
+      internalID: 8344143291265281608
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_4
+      name: zombie_4
       rect:
         serializedVersion: 2
-        x: 271
-        y: 55
-        width: 42
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 1024
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 78b69f98b26afef10800000000000000
-      internalID: 2301240640538241927
+      spriteID: 246f335a1d2c052b0800000000000000
+      internalID: -5597760131145927102
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_5
+      name: zombie_5
       rect:
         serializedVersion: 2
-        x: 350
-        y: 46
-        width: 27
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 512
+        y: 1024
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 42d58292f6615ce90800000000000000
-      internalID: -7006168978617246428
+      spriteID: 7cb6ad3f92a4fc340800000000000000
+      internalID: 4886205664765569991
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_6
+      name: zombie_6
       rect:
         serializedVersion: 2
-        x: 392
-        y: 32
-        width: 49
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1024
+        y: 1024
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 50883f3127b644270800000000000000
-      internalID: 8233824156445280261
+      spriteID: f3b7795f71139ff00800000000000000
+      internalID: 1151005158744226623
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_7
+      name: zombie_7
       rect:
         serializedVersion: 2
-        x: 454
-        y: 39
-        width: 42
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1536
+        y: 1024
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7a7055b7fa0970e70800000000000000
-      internalID: 9081386256978741159
+      spriteID: 89bc65584db962090800000000000000
+      internalID: -8059583146060493928
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_8
+      name: zombie_8
       rect:
         serializedVersion: 2
-        x: 514
-        y: 73
-        width: 23
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 512
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 038e0fefd0b3ba520800000000000000
-      internalID: 2714328131718670384
+      spriteID: 66f21e5aab5755b20800000000000000
+      internalID: 3122531361158672230
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_9
+      name: zombie_9
       rect:
         serializedVersion: 2
-        x: 539
-        y: 47
-        width: 15
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 512
+        y: 512
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 53dffebe386976450800000000000000
-      internalID: 6081995315130400053
+      spriteID: 5b2597f2147869b50800000000000000
+      internalID: 6599611017997144757
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_10
+      name: zombie_10
       rect:
         serializedVersion: 2
-        x: 330
-        y: 57
-        width: 18
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1024
+        y: 512
+        width: 512
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cc5a90b62d1752310800000000000000
-      internalID: 1379634009411790284
+      spriteID: f678ce79f56e6b200800000000000000
+      internalID: 195596932082337647
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_11
+      name: zombie_11
       rect:
         serializedVersion: 2
-        x: 509
-        y: 56
-        width: 24
-        height: 10
+        x: 1536
+        y: 512
+        width: 512
+        height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e0000a8ccab445eb0800000000000000
-      internalID: -4732074102987161586
+      spriteID: 83cb6609af742df70800000000000000
+      internalID: 9210503329416133688
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_12
+      name: zombie_12
       rect:
         serializedVersion: 2
-        x: 534
-        y: 53
-        width: 11
-        height: 10
+        x: 0
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e9ff4212d67741ae0800000000000000
-      internalID: -1579506258708988002
+      spriteID: 2541d0aa49319a4e0800000000000000
+      internalID: -1970021832768809902
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_13
+      name: zombie_13
       rect:
         serializedVersion: 2
-        x: 522
-        y: 41
-        width: 10
-        height: 7
+        x: 512
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c8510f9fcd93f21e0800000000000000
-      internalID: -2220492470021515892
+      spriteID: b7d2c66359600e1a0800000000000000
+      internalID: -6782413800887014021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_14
+      name: zombie_14
       rect:
         serializedVersion: 2
-        x: 534
-        y: 32
-        width: 10
-        height: 14
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e016c5ae9c7e541d0800000000000000
-      internalID: -3367030291983212274
+      spriteID: db9b630532b2bad40800000000000000
+      internalID: 5596614392607586749
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Charge_1_15
+      name: zombie_15
       rect:
         serializedVersion: 2
-        x: 548
-        y: 43
-        width: 6
-        height: 6
+        x: 1536
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 78ef8b168f9302580800000000000000
-      internalID: -8854013128456208761
+      spriteID: 1618b8eb971872046a3f096f02490592
+      internalID: 1014401306
       vertices: []
       indices: 
       edges: []
@@ -500,7 +497,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ee2f244b299b5f649afc625f9d6766c0
     internalID: 0
     vertices: []
     indices: 
@@ -508,24 +505,26 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":4.0},"gridSpriteSize":{"x":512.0,"y":512.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Charge_1_0: 778240012933890447
-      Charge_1_1: -2023402014011244658
-      Charge_1_10: 1379634009411790284
-      Charge_1_11: -4732074102987161586
-      Charge_1_12: -1579506258708988002
-      Charge_1_13: -2220492470021515892
-      Charge_1_14: -3367030291983212274
-      Charge_1_15: -8854013128456208761
-      Charge_1_2: 2118197556715995833
-      Charge_1_3: 4670737315312586929
-      Charge_1_4: 2301240640538241927
-      Charge_1_5: -7006168978617246428
-      Charge_1_6: 8233824156445280261
-      Charge_1_7: 9081386256978741159
-      Charge_1_8: 2714328131718670384
-      Charge_1_9: 6081995315130400053
+      zombie_0: -5782521184205631276
+      zombie_1: 7424166911509628443
+      zombie_10: 195596932082337647
+      zombie_11: 9210503329416133688
+      zombie_12: -1970021832768809902
+      zombie_13: -6782413800887014021
+      zombie_14: 5596614392607586749
+      zombie_15: 1014401306
+      zombie_2: -2758051070605636368
+      zombie_3: 8344143291265281608
+      zombie_4: -5597760131145927102
+      zombie_5: 4886205664765569991
+      zombie_6: 1151005158744226623
+      zombie_7: -8059583146060493928
+      zombie_8: 3122531361158672230
+      zombie_9: 6599611017997144757
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

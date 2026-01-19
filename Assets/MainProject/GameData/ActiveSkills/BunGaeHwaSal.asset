@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f959587813d9a32448154af88fe9a652, type: 3}
+  m_Name: BunGaeHwaSal
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skillID: 0
+  skillName: "\uBC88\uAC1C \uD654\uC0B4"
+  type: 0
+  icon: {fileID: -564504878191520670, guid: 1129030acaf763749ae61d0ca57e35f2, type: 3}
+  projectilePrefab: {fileID: 4763239350691375698, guid: 6a8f0d2619904ce40a17820a1642062a, type: 3}
+  projectileCount: 1
+  baseDamage: 5
+  cooldown: 2
+  lifetime: 1.5
+  range: 5
+  speed: 10
+  scale: 1
+  maxLevel: 10

@@ -9,29 +9,26 @@ namespace PlayerControll
 
     public class Player : Unit
     {
+        [SerializeField] private PlayerHPBar hpBar;
+
         private Player_Input _input;
         private SkillController _skillController;
 
         protected override void Start()
         {
-            _rb = GetComponent<Rigidbody2D>();
             _input = GetComponent<Player_Input>();
-            _skillController = 
-            
+            _skillController = GetComponent<SkillController>();
+
             base.Start();
+
+            _skillController.Set_Offset(offsetProperty);
+            hpBar.SetHP(Hp, MaxHp);
         }
 
         protected override void Update()
         {
             base.Update();
-
-            PlayerLookRotation();
             Set_MoveDirect();
-        }
-
-        private void PlayerLookRotation()
-        {
-            Debug.Log(_input.mouseDirection.x >= 0);
         }
 
         private void Set_MoveDirect()
@@ -40,20 +37,18 @@ namespace PlayerControll
             {
                 _MoveDirect = _input.move;
             }
-        }
-
-        protected override void Attack()
-        {
-            if (_input.attack)
+            
+            if (_MoveDirect.x != 0)
             {
-                if (_isAttackPossible)
-                {
-                    Debug.Log("공격!");
-                }
-                
-                _input.AttackInput(false);
+                _skillController.Set_Offset(offsetProperty);
             }
         }
+
+        protected override void OnHpChanged()
+        {
+            hpBar.SetHP(Hp, MaxHp);
+        }
+
     }
 }
 
