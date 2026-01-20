@@ -1,6 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct SkillResultData
+{
+    public Sprite Icon;
+    public string name;
+    public int level;
+    public float totalDamage;
+    public float Time;
+}
+
+
 public class SkillController : MonoBehaviour
 {
     [Header("처음 얻는 스킬")]
@@ -122,7 +133,7 @@ public class SkillController : MonoBehaviour
     }
 
 
-    private bool HasSkill(SkillData data)
+    public bool HasSkill(SkillData data)
     {
         foreach (var s in activeSkills)
             if (s.Data == data) return true;
@@ -153,5 +164,35 @@ public class SkillController : MonoBehaviour
             int rand = Random.Range(0, i + 1);
             (list[i], list[rand]) = (list[rand], list[i]);
         }
+    }
+
+    public int GetSkillLevel(SkillData data)
+    {
+        foreach (var s in activeSkills)
+            if (s.Data == data) return s.Level;
+
+        foreach (var s in passiveSkills)
+            if (s.Data == data) return s.Level;
+
+        return 0;
+    }
+
+    public List<SkillResultData> GetSkillResults()
+    {
+        List<SkillResultData> list = new();
+
+        foreach (var s in activeSkills)
+        {
+            list.Add(new SkillResultData
+            {
+                Icon = s.Data.icon,
+                name = s.Data.skillName,
+                level = s.Level,
+                totalDamage = s.TotalDamage,
+                Time = s.Time
+            });
+        }
+
+        return list;
     }
 }

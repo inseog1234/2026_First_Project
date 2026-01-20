@@ -7,6 +7,8 @@ public abstract class PassiveSkill
     
     protected SkillController owner;
     protected int level = 1;
+    public int Level => level;
+
 
     public PassiveSkill(SkillData data, SkillController owner)
     {

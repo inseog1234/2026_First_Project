@@ -17,83 +17,158 @@ MonoBehaviour:
   type: 0
   icon: {fileID: -564504878191520670, guid: 1129030acaf763749ae61d0ca57e35f2, type: 3}
   projectilePrefab: {fileID: 4763239350691375698, guid: 6a8f0d2619904ce40a17820a1642062a, type: 3}
-  projectileCount: 1
   baseStat:
     baseDamage: 6
     cooldown: 1.5
     lifetime: 1.5
-    range: 2.5
+    range: 4
     speed: 6
     scale: 1
     knockback: 1
+    projectileCount: 1
+    projectilefiring_Delay: 0.1
   levelUpStats:
   - baseDamage: 2
     cooldown: -0.1
     lifetime: 0
     range: 0
-    speed: 1
+    speed: 0
     scale: 0
     knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
   - baseDamage: 2
     cooldown: -0.1
     lifetime: 0
     range: 0
-    speed: 1
+    speed: 0.5
     scale: 0
     knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
   - baseDamage: 2
     cooldown: -0.1
     lifetime: 0
     range: 0
-    speed: 1
+    speed: 0
     scale: 0
     knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0
+    cooldown: 0
+    lifetime: 0
+    range: 0
+    speed: 0.5
+    scale: 0
+    knockback: 0
+    projectileCount: 1
+    projectilefiring_Delay: 0
   - baseDamage: 2
     cooldown: -0.1
     lifetime: 0
     range: 0
-    speed: 1
+    speed: 0
     scale: 0
     knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
   - baseDamage: 2
     cooldown: -0.1
     lifetime: 0
     range: 0
-    speed: 1
+    speed: 0.5
     scale: 0
     knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
   - baseDamage: 2
     cooldown: -0.1
     lifetime: 0
     range: 0
-    speed: 1
+    speed: 0
     scale: 0
     knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0
+    cooldown: 0
+    lifetime: 0
+    range: 0
+    speed: 0.5
+    scale: 0
+    knockback: 0
+    projectileCount: 1
+    projectilefiring_Delay: 0
   - baseDamage: 2
     cooldown: -0.1
     lifetime: 0
     range: 0
-    speed: 1
+    speed: 0
     scale: 0
     knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
   - baseDamage: 2
     cooldown: -0.1
     lifetime: 0
     range: 0
-    speed: 1
+    speed: 0.5
     scale: 0
     knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
   - baseDamage: 2
     cooldown: -0.1
     lifetime: 0
     range: 0
-    speed: 1
+    speed: 0
     scale: 0
     knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0
+    cooldown: 0
+    lifetime: 0
+    range: 0
+    speed: 0.5
+    scale: 0
+    knockback: 0
+    projectileCount: 1
+    projectilefiring_Delay: 0
   - baseDamage: 2
     cooldown: -0.1
     lifetime: 0
     range: 0
-    speed: 1
+    speed: 0
     scale: 0
     knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 0.5
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0
+    cooldown: 0
+    lifetime: 0
+    range: 0
+    speed: 0.5
+    scale: 0
+    knockback: 0
+    projectileCount: 1
+    projectilefiring_Delay: 0

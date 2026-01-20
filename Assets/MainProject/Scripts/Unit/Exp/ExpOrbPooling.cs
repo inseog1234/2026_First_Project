@@ -76,12 +76,12 @@ public class ExpOrbPooling : MonoBehaviour
         return 1;
     }
 
-    public void DropExp(Vector2 pos, int value)
+    public void DropExp(Vector2 pos, float _offset, int value)
     {
         while (value > 0)
         {
             int v = GetOrbValue(value);
-            Vector2 offset = Random.insideUnitCircle * 0.5f;
+            Vector2 offset = Random.insideUnitCircle * _offset;
             Get(pos + offset, v);
             value -= v;
         }

@@ -17,6 +17,8 @@ public struct SkillStat
     public float speed;
     public float scale; // 기준 : localScale (Transform) 참고용
     public float knockback;
+    public int projectileCount;
+    public float projectilefiring_Delay;
 }
 
 [CreateAssetMenu(fileName = "SkillData", menuName = "Scriptable Objects/SkillData")]
@@ -30,7 +32,6 @@ public class SkillData : ScriptableObject
 
     [Header("공격 수단(?)")]
     public GameObject projectilePrefab;
-    public int projectileCount;
     
 
     [Header("기본 스탯")]

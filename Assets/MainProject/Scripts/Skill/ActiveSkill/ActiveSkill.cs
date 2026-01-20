@@ -5,7 +5,15 @@ public abstract class ActiveSkill
     protected SkillController owner;
 
     protected float cooldownTimer;
-    protected int level = 0;
+    protected int level = 1;
+    public int Level => level;
+
+    protected float totalDamage;
+    public float TotalDamage => totalDamage;
+
+    protected float time;
+    public float Time => time;
+
 
     protected SkillStat currentStat;
 
@@ -20,6 +28,7 @@ public abstract class ActiveSkill
 
     public void Tick(float dt)
     {
+        time += dt;
         cooldownTimer -= dt;
         if (cooldownTimer <= 0f)
         {
@@ -60,11 +69,25 @@ public abstract class ActiveSkill
         return currentStat.knockback;
     }
 
+    protected int GetFinalProjectileCount()
+    {
+        return currentStat.projectileCount;
+    }
+    protected float GetFinalProjectileDelay()
+    {
+        return currentStat.projectilefiring_Delay;
+    }
+
+    public void AddDamage(float dmg)
+    {
+        totalDamage += dmg;
+    }
+
     public void LevelUp()
     {
         if (level >= data.maxLevel) return;
 
-        SkillStat add = data.levelUpStats[level];
+        SkillStat add = data.levelUpStats[level-1];
 
         currentStat.baseDamage += add.baseDamage;
         currentStat.cooldown += add.cooldown;
@@ -73,6 +96,8 @@ public abstract class ActiveSkill
         currentStat.speed += add.speed;
         currentStat.scale += add.scale;
         currentStat.knockback += add.knockback;
+        currentStat.projectileCount += add.projectileCount;
+        currentStat.projectilefiring_Delay += add.projectilefiring_Delay;
 
         level++;
     }

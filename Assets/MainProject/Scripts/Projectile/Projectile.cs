@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    private ActiveSkill ownerSkill;
+
     private Vector2 dir;
     private float speed;
     private float damage;
@@ -11,7 +13,7 @@ public class Projectile : MonoBehaviour
 
     private bool isActive;
 
-    public void Init(Vector2 dir, float damage, float speed, float lifeTime, float knockback, int pierce = 0)
+    public void Init(Vector2 dir, float damage, float speed, float lifeTime, float knockback, ActiveSkill skill, int pierce = 0)
     {
         this.dir = dir.normalized;
         this.damage = damage;
@@ -19,6 +21,7 @@ public class Projectile : MonoBehaviour
         this.lifeTime = lifeTime;
         this.pierce = pierce;
         this.knockback = knockback;
+        this.ownerSkill = skill;
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -49,6 +52,7 @@ public class Projectile : MonoBehaviour
         if (enemy.isDead) return;
         
         enemy.TakeDamage(damage);
+        ownerSkill?.AddDamage(damage);
         enemy.Knockback(dir, knockback);
 
         if (pierce > 0)
@@ -64,6 +68,7 @@ public class Projectile : MonoBehaviour
     private void ReturnToPool()
     {
         isActive = false;
+        ownerSkill = null;
         ProjectilePooling.Instance.Return(this);
     }
 }

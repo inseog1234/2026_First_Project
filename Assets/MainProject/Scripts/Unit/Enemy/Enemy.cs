@@ -112,39 +112,43 @@ public class Enemy : Unit
     protected override void Die()
     {
         if (isDead) return;
-
         isDead = true;
+        KillManager.Instance.AddKill();
         _MoveDirect = Vector2.zero;
         gameObject.layer = LayerMask.NameToLayer("Default");
-        ExpOrbPooling.Instance.DropExp(transform.position, expValue);
+        ExpOrbPooling.Instance.DropExp(transform.position, 1, expValue);
         StartCoroutine(DeathSequence());
     }
 
     private IEnumerator DeathSequence()
     {
+        if (_am != null)
+            _am.enabled = false;
+
+        float duration = 0.5f;
         float t = 0f;
-        Vector3 startPos = transform.position;
-        Vector3 endPos = new Vector3(transform.position.x, target.position.y - 8f, transform.position.z);
 
-        float startRot = transform.eulerAngles.z;
-        float endRot = 180f;
-
-        while (t < 1f)
+        Vector3 startScale = transform.localScale;
+        float rotateSpeed = 720f;
+        while (t < duration)
         {
             t += Time.deltaTime;
+            float rate = t / duration;
 
-            float rot = Mathf.LerpAngle(startRot, endRot, t);
-            transform.rotation = Quaternion.Euler(0, 0, rot);
+            transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
 
-            transform.position = Vector3.Lerp(startPos, endPos, t);
+            transform.localScale = Vector3.Lerp(startScale, Vector3.zero, rate);
 
             yield return null;
         }
 
-        // 경험치 드랍
+        transform.localScale = startScale;
+        transform.rotation = Quaternion.identity;
+        if (_am != null)
+            _am.enabled = true;
 
-        // 풀 반환
         EnemyPooling.Instance.Return(this);
     }
+
 
 }

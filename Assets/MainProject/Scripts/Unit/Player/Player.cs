@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PlayerControll
@@ -15,6 +13,9 @@ namespace PlayerControll
         [SerializeField] private float First_Max_Exp = 4;
         [SerializeField] private PlayerUI _ui;
 
+        [Header("UI")]
+        [SerializeField] private SkillSelectUI skillUI;
+
         private Player_Input _input;
         private SkillController _skillController;
         
@@ -22,7 +23,12 @@ namespace PlayerControll
         public float curExp {get; private set;}
         public float maxExp {get; private set;}
         public int Level {get; private set;}
+        public static Player Instance;
 
+        private void Awake()
+        {
+            Instance = this;
+        }
         protected override void Start()
         {
             _input = GetComponent<Player_Input>();
@@ -43,6 +49,16 @@ namespace PlayerControll
         {
             base.Update();
             Set_MoveDirect();
+
+            // F키 누르면 치트
+            if (_input.interaction)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    ExpOrbPooling.Instance.DropExp((Vector2)transform.position + _input.mouseDirection * 3f, 2f, Random.Range(55, 138));
+                }
+                _input.InteractionInput(false);
+            }
         }
 
         public void AddExp(float v)
@@ -61,20 +77,10 @@ namespace PlayerControll
         {
             curExp = 0;
             maxExp *= 1.2f;
-            List<SkillData> Randomskills = _skillController.GetRandomSkillList(3);
-
-            if (Randomskills.Count > 0)
-            {
-                for (int i = 0; i < Randomskills.Count; i++)
-                {
-                    Debug.Log($"{Randomskills[i].skillName}");
-                }
-
-                _skillController.ApplySkill(Randomskills[0]);
-            }
             
-
             Level++;
+
+            skillUI.Open(_skillController);
         }
 
         private void Set_MoveDirect()
