@@ -7,13 +7,27 @@ public class GameTimer : MonoBehaviour
 {
     public float limitTime = 1800f; // 30분
     public TextMeshProUGUI timerText;
-
+    
     [SerializeField] private EndGameUI End;
     [SerializeField] private SkillController skillController;
 
     private float remainTime;
+
+    public float RealGameTime => limitTime - remainTime;
+
     private bool finished;
 
+    public static GameTimer Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     private void Start()
     {
         remainTime = limitTime;
@@ -23,25 +37,25 @@ public class GameTimer : MonoBehaviour
     private void Update()
     {
         if (finished) return;
-        if (Time.timeScale == 0) return; // 레벨업 중 정지
+        if (Time.timeScale == 0) return;
 
         remainTime -= Time.deltaTime;
 
         if (PlayerControll.Player.Instance.isDead)
         {
             FinishGame(true);
+            return;
         }
-        else
+
+        if (remainTime <= 0f)
         {
-            if (remainTime <= 0f)
-            {
-                remainTime = 0f;
-                FinishGame(false);
-            }
+            remainTime = 0f;
+            FinishGame(false);
         }
 
         UpdateUI();
     }
+
 
     private void UpdateUI()
     {
@@ -50,7 +64,7 @@ public class GameTimer : MonoBehaviour
         timerText.SetText("{0:00}:{1:00}", min, sec);
     }
     
-    private void FinishGame(bool isGameOver)
+    public void FinishGame(bool isGameOver)
     {
         finished = true;
 

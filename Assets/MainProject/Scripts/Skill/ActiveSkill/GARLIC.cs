@@ -52,6 +52,7 @@ public class GARLIC : ActiveSkill
             if (e == null) continue;
 
             e.TakeDamage(GetFinalDamage());
+            AddDamage(GetFinalDamage());
 
             Vector2 dir = ((Vector2)e.transform.position - (Vector2)owner.transform.position).normalized;
             e.Knockback(dir, data.baseStat.knockback);

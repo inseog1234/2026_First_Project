@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4711619869740093055}
   - component: {fileID: 3113305929324009702}
   m_Layer: 6
-  m_Name: Enemy_1
+  m_Name: Enemy_1_1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,8 +187,8 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   offsetProperty: {x: 0, y: 0}
   expValue: 1
-  Damage: 0.008
-  Damage_Interval: 0.001
+  Damage: 0.08
+  Damage_Interval: 0.01
 --- !u!95 &4711619869740093055
 Animator:
   serializedVersion: 7

@@ -4229,7 +4229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2574c405bf46b04d9c144214c97739f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameTimer
-  limitTime: 300
+  limitTime: 600
   timerText: {fileID: 1061971311}
   End: {fileID: 1870124961}
   skillController: {fileID: 155521333}
@@ -4702,16 +4702,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExpOrbPooling
   pools:
   - prefab: {fileID: 4601671529586873284, guid: c0a9dfdf446ba4d41a344733314c4bba, type: 3}
-    size: 3000
+    size: 1000
     expValue: 1
   - prefab: {fileID: 5230435821621032757, guid: ea333dcdc7b699b428bd0df7b5763d77, type: 3}
-    size: 1000
+    size: 500
     expValue: 10
   - prefab: {fileID: 3473013077798185388, guid: 4a299f2dc99eb1c40814902dc6f931f3, type: 3}
-    size: 200
+    size: 100
     expValue: 100
   - prefab: {fileID: 7172247502551038011, guid: 4088f27ac798be64eaf1a667cffe3533, type: 3}
-    size: 100
+    size: 50
     expValue: 1000
 --- !u!4 &1108300154
 Transform:
@@ -5253,7 +5253,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPooling
   pools:
   - prefab: {fileID: 1801143585149687066, guid: fa7af7a6cfad1c04bb6ffee6161359b5, type: 3}
-    size: 5000
+    size: 600
+  - prefab: {fileID: 1801143585149687066, guid: 54347f956c9628c4f9f3c7f6b0149ddc, type: 3}
+    size: 480
+  - prefab: {fileID: 1801143585149687066, guid: 454115e58f6f0d24d858f8699069d5b6, type: 3}
+    size: 400
+  - prefab: {fileID: 1801143585149687066, guid: bfdd20b8e1de4614c8e5d5c58f3fd308, type: 3}
+    size: 320
+  - prefab: {fileID: 1801143585149687066, guid: a8b7eb3df835e6343a2d09051693cbe2, type: 3}
+    size: 240
+  - prefab: {fileID: 1801143585149687066, guid: f93c0b77f082dab42b385c1386e890bc, type: 3}
+    size: 280
+  - prefab: {fileID: 1801143585149687066, guid: cf83fb488a080ae4293ddf4d7659f52d, type: 3}
+    size: 200
+  - prefab: {fileID: 1801143585149687066, guid: b325b01dc15443f4982a1e98b93d6dae, type: 3}
+    size: 160
+  - prefab: {fileID: 1801143585149687066, guid: 5c31e3623b2ce0e44a800080b3e51725, type: 3}
+    size: 120
 --- !u!4 &1212559042
 Transform:
   m_ObjectHideFlags: 0
@@ -5659,10 +5675,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4f147a17f58a946843def6f988167e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  enemyPrefab: {fileID: 1801143585149687066, guid: fa7af7a6cfad1c04bb6ffee6161359b5, type: 3}
-  maxEnemyCount: 4000
   spawnSize: {x: 30, y: 30}
-  spawnInterval: 0.05
+  enemies:
+  - prefab: {fileID: 1801143585149687066, guid: fa7af7a6cfad1c04bb6ffee6161359b5, type: 3}
+    startTime: 0
+    weight: 70
+  - prefab: {fileID: 1801143585149687066, guid: 54347f956c9628c4f9f3c7f6b0149ddc, type: 3}
+    startTime: 0
+    weight: 40
+  - prefab: {fileID: 1801143585149687066, guid: 454115e58f6f0d24d858f8699069d5b6, type: 3}
+    startTime: 30
+    weight: 30
+  - prefab: {fileID: 1801143585149687066, guid: bfdd20b8e1de4614c8e5d5c58f3fd308, type: 3}
+    startTime: 120
+    weight: 50
+  - prefab: {fileID: 1801143585149687066, guid: a8b7eb3df835e6343a2d09051693cbe2, type: 3}
+    startTime: 180
+    weight: 40
+  - prefab: {fileID: 1801143585149687066, guid: f93c0b77f082dab42b385c1386e890bc, type: 3}
+    startTime: 240
+    weight: 30
+  - prefab: {fileID: 1801143585149687066, guid: cf83fb488a080ae4293ddf4d7659f52d, type: 3}
+    startTime: 300
+    weight: 25
+  - prefab: {fileID: 1801143585149687066, guid: b325b01dc15443f4982a1e98b93d6dae, type: 3}
+    startTime: 360
+    weight: 20
+  - prefab: {fileID: 1801143585149687066, guid: 5c31e3623b2ce0e44a800080b3e51725, type: 3}
+    startTime: 420
+    weight: 15
+  miniBosses: []
+  baseMaxEnemyCount: 150
+  baseSpawnInterval: 0.6
 --- !u!212 &1340005872
 SpriteRenderer:
   serializedVersion: 2
