@@ -6,8 +6,7 @@ public static class SkillSpawner
         return data.skillID switch
         {
             0 => new BunGaeHwaSal(data, owner),
-            // 1 => new 다음 스킬 이름 정해야함ㅠㅠ(data, owner),
-            // 2 => new 
+            1 => new HOLYBOOK(data, owner),
             _ => null
         };
     }

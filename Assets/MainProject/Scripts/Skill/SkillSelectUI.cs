@@ -6,11 +6,19 @@ public class SkillSelectUI : MonoBehaviour
     public SkillSelectButton[] buttons;
     private SkillController skillController;
 
+    public SkillController GetSkillController()
+    {
+        return skillController;
+    }
+
     public void Open(SkillController controller)
     {
         skillController = controller;
 
         List<SkillData> list = controller.GetRandomSkillList(buttons.Length);
+
+        if (list.Count == 0)
+            return;
 
         for (int i = 0; i < buttons.Length; i++)
             buttons[i].gameObject.SetActive(false);
@@ -35,10 +43,5 @@ public class SkillSelectUI : MonoBehaviour
     {
         Time.timeScale = 1f;
         gameObject.SetActive(false);
-    }
-
-    public SkillController GetSkillController()
-    {
-        return skillController;
     }
 }

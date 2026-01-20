@@ -35,11 +35,15 @@ public class SkillController : MonoBehaviour
         }
     }
 
+    public System.Action<float> OnSkillUpdate;
     private void Update()
     {
         float dt = Time.deltaTime;
+
         for (int i = 0; i < activeSkills.Count; i++)
             activeSkills[i].Tick(dt);
+
+        OnSkillUpdate?.Invoke(dt);
     }
 
     public void AddSkill(SkillData data)
@@ -62,52 +66,72 @@ public class SkillController : MonoBehaviour
     }
 
     // 강화 로직
-    public void ApplySkill(SkillData selected)
+    public void ApplySkill(SkillData data)
     {
-        foreach (var s in activeSkills)
+        ActiveSkill a = activeSkills.Find(x => x.Data == data);
+        if (a != null)
         {
-            if (s.Data == selected)
-            {
-                s.LevelUp();
-                return;
-            }
+            a.LevelUp();
+            return;
         }
 
-        foreach (var s in passiveSkills)
+        PassiveSkill p = passiveSkills.Find(x => x.Data == data);
+        if (p != null)
         {
-            if (s.Data == selected)
-            {
-                s.LevelUp();
-                return;
-            }
+            p.LevelUp();
+            return;
         }
 
-        AddSkill(selected);
+        AddSkill(data);
     }
 
     // 같은 스킬이 안나오는 랜덤 뽑기
     public List<SkillData> GetRandomSkillList(int count)
     {
+        List<SkillData> pool = GetAvailableSkillList();
         List<SkillData> result = new();
-        List<SkillData> candidates = new();
 
-        foreach (var s in allSkillPool)
+        if (pool.Count == 0)
+            return result;
+
+        count = Mathf.Min(count, pool.Count);
+
+        for (int i = 0; i < count; i++)
         {
-            if (!HasSkill(s))
-                candidates.Add(s);
+            int idx = Random.Range(0, pool.Count);
+            result.Add(pool[idx]);
+            pool.RemoveAt(idx);
         }
-
-        foreach (var s in GetOwnedSkillData())
-        {
-            candidates.Add(s);
-        }
-
-        Shuffle(candidates);
-
-        for (int i = 0; i < count && i < candidates.Count; i++)
-            result.Add(candidates[i]);
 
         return result;
+    }
+
+    private List<SkillData> GetAvailableSkillList()
+    {
+        List<SkillData> list = new();
+
+        foreach (var data in allSkillPool)
+        {
+            ActiveSkill a = activeSkills.Find(s => s.Data == data);
+            PassiveSkill p = passiveSkills.Find(s => s.Data == data);
+
+            if (a != null)
+            {
+                if (a.Level < data.maxLevel)
+                    list.Add(data);
+            }
+            else if (p != null)
+            {
+                if (p.Level < data.maxLevel)
+                    list.Add(data);
+            }
+            else
+            {
+                list.Add(data); // 아직 안 가진 스킬
+            }
+        }
+
+        return list;
     }
 
     // 같은 아이템도 나올 수 있는 뽑기
@@ -195,4 +219,11 @@ public class SkillController : MonoBehaviour
 
         return list;
     }
+
+    public bool IsSkillMaxLevel(SkillData data)
+    {
+        int cur = GetSkillLevel(data);
+        return cur >= data.maxLevel;
+    }
+
 }

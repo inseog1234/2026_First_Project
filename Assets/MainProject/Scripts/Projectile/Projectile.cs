@@ -1,7 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+
+    private bool ignoreHitReturn;
+
+    // 같은 적 한 번만 타격
+    // private HashSet<int> hitSet;
+
     private ActiveSkill ownerSkill;
 
     private Vector2 dir;
@@ -13,7 +20,10 @@ public class Projectile : MonoBehaviour
 
     private bool isActive;
 
-    public void Init(Vector2 dir, float damage, float speed, float lifeTime, float knockback, ActiveSkill skill, int pierce = 0)
+    public void Init(
+        Vector2 dir, float damage, float speed, float lifeTime, float knockback,
+        ActiveSkill skill, int pierce = 0, bool rotate = true, bool ignoreHitReturn = false
+    )
     {
         this.dir = dir.normalized;
         this.damage = damage;
@@ -22,13 +32,26 @@ public class Projectile : MonoBehaviour
         this.pierce = pierce;
         this.knockback = knockback;
         this.ownerSkill = skill;
+        this.ignoreHitReturn = ignoreHitReturn;
 
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        // 같은 적 한 번만 타격
+        // hitSet ??= new HashSet<int>();
+        // hitSet.Clear();
+
+        if (rotate && dir != Vector2.zero)
+        {
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+        else
+        {
+            transform.rotation = Quaternion.identity;
+        }
 
         isActive = true;
         gameObject.SetActive(true);
     }
+
 
     private void Update()
     {
@@ -50,11 +73,23 @@ public class Projectile : MonoBehaviour
 
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy.isDead) return;
-        
+
+        // 같은 적 한 번만 타격
+        // int id = other.GetInstanceID();
+        // if (!hitSet.Add(id)) return;
+
         enemy.TakeDamage(damage);
         ownerSkill?.AddDamage(damage);
         enemy.Knockback(dir, knockback);
 
+        if (knockback > 0f)
+        {
+            Vector2 kbDir = ((Vector2)other.transform.position - (Vector2)transform.position).normalized;
+            enemy.Knockback(kbDir, knockback);
+        }
+
+        if (ignoreHitReturn) return;
+        
         if (pierce > 0)
         {
             pierce--;

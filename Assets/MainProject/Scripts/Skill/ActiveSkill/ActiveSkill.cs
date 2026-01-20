@@ -21,9 +21,9 @@ public abstract class ActiveSkill
     {
         this.data = data;
         this.owner = owner;
-
+       
         currentStat = data.baseStat;
-        cooldownTimer = currentStat.cooldown;
+        cooldownTimer = 0f;
     }
 
     public void Tick(float dt)

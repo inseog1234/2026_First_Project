@@ -883,6 +883,8 @@ MonoBehaviour:
     projectileBonus: 0
   allSkillPool:
   - {fileID: 11400000, guid: a672c4e179454ba429013bdfe187b087, type: 2}
+  - {fileID: 11400000, guid: bf46705b2f1db5c4aa78044051b65518, type: 2}
+  - {fileID: 11400000, guid: 5f4bb661eb2e4594e92b264f5741cdde, type: 2}
 --- !u!61 &155521334
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3838,7 +3840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2574c405bf46b04d9c144214c97739f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameTimer
-  limitTime: 60
+  limitTime: 300
   timerText: {fileID: 1061971311}
   End: {fileID: 1870124961}
   skillController: {fileID: 155521333}
@@ -5178,9 +5180,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 1801143585149687066, guid: fa7af7a6cfad1c04bb6ffee6161359b5, type: 3}
-  maxEnemyCount: 30
+  maxEnemyCount: 100
   spawnSize: {x: 20, y: 20}
-  spawnInterval: 1
+  spawnInterval: 0.6
 --- !u!212 &1340005872
 SpriteRenderer:
   serializedVersion: 2
@@ -6289,7 +6291,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectilePooling
   pools:
   - prefab: {fileID: 4763239350691375698, guid: 6a8f0d2619904ce40a17820a1642062a, type: 3}
-    size: 50
+    size: 150
+  - prefab: {fileID: 4763239350691375698, guid: d4fa9fdd66dae214782dc73243df3536, type: 3}
+    size: 100
+  - prefab: {fileID: 4763239350691375698, guid: 4f00e91a4518aa0478e4099eaeb2fd04, type: 3}
+    size: 10
 --- !u!114 &1658284271 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1898426544356525662, guid: 636d36c93840aaf4b9ab1cbe750e35ac, type: 3}

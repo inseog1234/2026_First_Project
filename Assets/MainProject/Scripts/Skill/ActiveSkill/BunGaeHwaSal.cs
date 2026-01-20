@@ -16,9 +16,6 @@ public class BunGaeHwaSal : ActiveSkill
         owner.StartCoroutine(FireBurst(dir));
     }
 
-    // ==========================
-    // ⭐ 연발 발사 코루틴
-    // ==========================
     private IEnumerator FireBurst(Vector2 dir)
     {
         int count = GetFinalProjectileCount() + owner.GlobalStats.projectileBonus;
@@ -38,7 +35,6 @@ public class BunGaeHwaSal : ActiveSkill
                 this
             );
 
-            // 마지막 발은 딜레이 없음
             if (i < count - 1 && delay > 0)
                 yield return new WaitForSeconds(delay);
         }

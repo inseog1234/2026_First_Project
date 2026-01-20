@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f959587813d9a32448154af88fe9a652, type: 3}
+  m_Name: HOLYBOOK
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skillID: 1
+  skillName: "\uC131\uACBD"
+  type: 0
+  icon: {fileID: 21300000, guid: 1e6626608c283b248bc9571129af8cf5, type: 3}
+  projectilePrefab: {fileID: 4763239350691375698, guid: 4f00e91a4518aa0478e4099eaeb2fd04, type: 3}
+  baseStat:
+    baseDamage: 0.1
+    cooldown: 12
+    lifetime: 8
+    range: 1.6
+    speed: 4
+    scale: 1
+    knockback: 0.1
+    projectileCount: 6
+    projectilefiring_Delay: 0.1
+  levelUpStats:
+  - baseDamage: 1
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 0.4
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
