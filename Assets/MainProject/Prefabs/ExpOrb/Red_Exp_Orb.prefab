@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExpOrb
   expValue: 1000
-  detectRadius: 1
+  detectRadius: 1.5
   pullSpeed: 4
   backOffset: 2
 --- !u!58 &598950556976711489
