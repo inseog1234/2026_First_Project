@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PlayerControll
@@ -32,7 +34,7 @@ namespace PlayerControll
             Level = 1;
             
             maxExp = First_Max_Exp;
-            
+
             _ui.SetHP(Hp, MaxHp);
             _ui.SetExp(curExp * 1.0f, maxExp * 1.0f);
         }
@@ -59,6 +61,19 @@ namespace PlayerControll
         {
             curExp = 0;
             maxExp *= 1.2f;
+            List<SkillData> Randomskills = _skillController.GetRandomSkillList(3);
+
+            if (Randomskills.Count > 0)
+            {
+                for (int i = 0; i < Randomskills.Count; i++)
+                {
+                    Debug.Log($"{Randomskills[i].skillName}");
+                }
+
+                _skillController.ApplySkill(Randomskills[0]);
+            }
+            
+
             Level++;
         }
 

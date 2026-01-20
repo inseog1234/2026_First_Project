@@ -3,6 +3,8 @@ using UnityEngine;
 public abstract class PassiveSkill
 {
     protected SkillData data;
+    public SkillData Data => data;
+    
     protected SkillController owner;
     protected int level = 1;
 

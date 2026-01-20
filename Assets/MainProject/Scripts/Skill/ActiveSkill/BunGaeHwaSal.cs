@@ -7,7 +7,6 @@ public class BunGaeHwaSal : ActiveSkill
     protected override void Cast()
     {
         Enemy target = FindNearestEnemy();
-
         if (target == null) return;
 
         Vector2 dir = ((Vector2)target.transform.position + target.Get_Offset() - (Vector2)owner.transform.position).normalized;
@@ -23,9 +22,9 @@ public class BunGaeHwaSal : ActiveSkill
         p.Init(
             dir,
             GetFinalDamage(),
-            data.baseStat.speed,
-            data.baseStat.lifetime,
-            data.baseStat.knockback
+            GetFinalSpeed(),
+            GetFinalLifetime(),
+            GetFinalKnockback()
         );
     }
 
@@ -33,9 +32,10 @@ public class BunGaeHwaSal : ActiveSkill
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(
             owner.transform.position,
-            data.baseStat.range,
+            GetFinalRange(),
             LayerMask.GetMask("Enemy")
         );
+
 
         float minDist = float.MaxValue;
         Enemy nearest = null;

@@ -23,7 +23,77 @@ MonoBehaviour:
     cooldown: 1.5
     lifetime: 1.5
     range: 2.5
-    speed: 1
+    speed: 6
     scale: 1
     knockback: 1
-  levelUpStats: []
+  levelUpStats:
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 1
+    scale: 0
+    knockback: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 1
+    scale: 0
+    knockback: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 1
+    scale: 0
+    knockback: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 1
+    scale: 0
+    knockback: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 1
+    scale: 0
+    knockback: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 1
+    scale: 0
+    knockback: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 1
+    scale: 0
+    knockback: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 1
+    scale: 0
+    knockback: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 1
+    scale: 0
+    knockback: 0
+  - baseDamage: 2
+    cooldown: -0.1
+    lifetime: 0
+    range: 0
+    speed: 1
+    scale: 0
+    knockback: 0

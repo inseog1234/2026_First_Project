@@ -544,6 +544,8 @@ MonoBehaviour:
     cooldownMultiplier: 1
     areaMultiplier: 1
     projectileBonus: 0
+  allSkillPool:
+  - {fileID: 11400000, guid: a672c4e179454ba429013bdfe187b087, type: 2}
 --- !u!61 &155521334
 BoxCollider2D:
   m_ObjectHideFlags: 0
