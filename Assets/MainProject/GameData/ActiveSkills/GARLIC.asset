@@ -120,4 +120,4 @@ MonoBehaviour:
     projectilefiring_Delay: 0
   auraSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   auraColor: {r: 0.3962263, g: 0.13207541, b: 0, a: 0.35686275}
-  tickInterval: 1
+  tickInterval: 0.2

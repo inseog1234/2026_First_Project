@@ -28,7 +28,9 @@ public class HOLYBOOK : ActiveSkill
         SpawnBooks(count);
 
         owner.StartCoroutine(LifeRoutine());
-        owner.OnSkillUpdate += UpdateOrbit; 
+        
+        owner.OnSkillUpdate -= UpdateOrbit;
+        owner.OnSkillUpdate += UpdateOrbit;
     }
 
     private void SpawnBooks(int count)

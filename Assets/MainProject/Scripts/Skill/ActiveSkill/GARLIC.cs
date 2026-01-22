@@ -8,6 +8,10 @@ public class GARLIC : ActiveSkill
 
     private GarlicSkillData gData;
 
+    // 이걸로 초기화 했는지 확인할거잉ㅇ
+    private bool initialized;
+    private GarlicAuraVisual visual;
+
     public GARLIC(SkillData data, SkillController owner) : base(data, owner)
     {
         gData = (GarlicSkillData)data;
@@ -15,10 +19,21 @@ public class GARLIC : ActiveSkill
 
     protected override void Cast()
     {
+        // 초기화 한번만 할래요
+        if (initialized)
+        {
+            radius = GetFinalRange();
+            if (visual != null) visual.SetRadius(radius);
+            return;
+        }
+
+        initialized = true;
+
         radius = GetFinalRange();
         tickInterval = gData.tickInterval;
         timer = 0f;
 
+        // 시각 오브젝트 생성 1회
         GameObject go = new GameObject("GarlicAura");
         go.transform.SetParent(owner.transform);
 
@@ -27,9 +42,11 @@ public class GARLIC : ActiveSkill
         sr.color = gData.auraColor;
         sr.sortingOrder = -1;
 
-        var visual = go.AddComponent<GarlicAuraVisual>();
-        visual.Init(owner, GetFinalRange());
+        visual = go.AddComponent<GarlicAuraVisual>();
+        visual.Init(owner, radius);
 
+        // 스킬 중복 추가 금지
+        owner.OnSkillUpdate -= UpdateAura;
         owner.OnSkillUpdate += UpdateAura;
     }
 
