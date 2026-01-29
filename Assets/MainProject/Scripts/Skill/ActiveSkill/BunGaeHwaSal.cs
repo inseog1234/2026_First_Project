@@ -7,11 +7,16 @@ public class BunGaeHwaSal : ActiveSkill
 
     protected override void Cast()
     {
+        EnsureProjectilePool(80, ProjectileParentType.World);
+        if (projectilePool == null) return;
+
         Enemy target = FindNearestEnemy();
         if (target == null) return;
 
-        Vector2 dir = ((Vector2)target.transform.position + target.Get_Offset()
-                      - (Vector2)owner.transform.position).normalized;
+        Vector2 dir = (
+            (Vector2)target.transform.position + target.Get_Offset()
+            - (Vector2)owner.transform.position
+        ).normalized;
 
         owner.StartCoroutine(FireBurst(dir));
     }
@@ -23,19 +28,20 @@ public class BunGaeHwaSal : ActiveSkill
 
         for (int i = 0; i < count; i++)
         {
-            Projectile p = ProjectilePooling.Instance.Get(data.projectilePrefab);
-
+            Projectile p = projectilePool.Get();
             p.transform.position = owner.transform.position + (Vector3)owner.offset;
+
             p.Init(
                 dir,
                 GetFinalDamage(),
                 GetFinalSpeed(),
                 GetFinalLifetime(),
                 GetFinalKnockback(),
-                this
+                this,
+                projectilePool
             );
 
-            if (i < count - 1 && delay > 0)
+            if (i < count - 1 && delay > 0f)
                 yield return new WaitForSeconds(delay);
         }
     }
@@ -60,6 +66,7 @@ public class BunGaeHwaSal : ActiveSkill
                 nearest = hit.GetComponent<Enemy>();
             }
         }
+
         return nearest;
     }
 }

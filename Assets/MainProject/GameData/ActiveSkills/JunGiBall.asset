@@ -16,7 +16,7 @@ MonoBehaviour:
   skillName: "\uC804\uAE30\uBCFC"
   type: 0
   icon: {fileID: -7018801485362641992, guid: 206f6065abda0d042bb7f5de6ac70e71, type: 3}
-  projectilePrefab: {fileID: 4763239350691375698, guid: d4fa9fdd66dae214782dc73243df3536, type: 3}
+  projectilePrefab: {fileID: -2101719803613538055, guid: d4fa9fdd66dae214782dc73243df3536, type: 3}
   baseStat:
     baseDamage: 8
     cooldown: 2

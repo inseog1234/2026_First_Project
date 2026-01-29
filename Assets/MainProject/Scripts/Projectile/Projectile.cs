@@ -1,14 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-
-    private bool ignoreHitReturn;
-
-    // 같은 적 한 번만 타격
-    // private HashSet<int> hitSet;
-
+    private SkillProjectilePool ownerPool;
     private ActiveSkill ownerSkill;
 
     private Vector2 dir;
@@ -17,26 +11,21 @@ public class Projectile : MonoBehaviour
     private float lifeTime;
     private float knockback;
     private int pierce;
-
+    private bool ignoreHitReturn;
     private bool isActive;
 
-    public void Init(
-        Vector2 dir, float damage, float speed, float lifeTime, float knockback,
-        ActiveSkill skill, int pierce = 0, bool rotate = true, bool ignoreHitReturn = false
-    )
+    public void Init(Vector2 dir, float damage, float speed, float lifeTime, float knockback, ActiveSkill skill, 
+    SkillProjectilePool pool, int pierce = 0, bool rotate = true, bool ignoreHitReturn = false)
     {
         this.dir = dir.normalized;
         this.damage = damage;
         this.speed = speed;
         this.lifeTime = lifeTime;
-        this.pierce = pierce;
         this.knockback = knockback;
+        this.pierce = pierce;
         this.ownerSkill = skill;
+        this.ownerPool = pool;
         this.ignoreHitReturn = ignoreHitReturn;
-
-        // 같은 적 한 번만 타격
-        // hitSet ??= new HashSet<int>();
-        // hitSet.Clear();
 
         if (rotate && dir != Vector2.zero)
         {
@@ -52,7 +41,6 @@ public class Projectile : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-
     private void Update()
     {
         if (!isActive) return;
@@ -60,10 +48,8 @@ public class Projectile : MonoBehaviour
         transform.position += (Vector3)(dir * speed * Time.deltaTime);
 
         lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0)
-        {
+        if (lifeTime <= 0f)
             ReturnToPool();
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -72,38 +58,37 @@ public class Projectile : MonoBehaviour
         if (!other.CompareTag("Enemy")) return;
 
         Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy.isDead) return;
-
-        // 같은 적 한 번만 타격
-        // int id = other.GetInstanceID();
-        // if (!hitSet.Add(id)) return;
+        if (enemy == null || enemy.isDead) return;
 
         enemy.TakeDamage(damage);
         ownerSkill?.AddDamage(damage);
-        enemy.Knockback(dir, knockback);
 
         if (knockback > 0f)
         {
-            Vector2 kbDir = ((Vector2)other.transform.position - (Vector2)transform.position).normalized;
+            Vector2 kbDir =
+                ((Vector2)enemy.transform.position - (Vector2)transform.position).normalized;
             enemy.Knockback(kbDir, knockback);
         }
 
         if (ignoreHitReturn) return;
-        
+
         if (pierce > 0)
-        {
             pierce--;
-        }
         else
-        {
             ReturnToPool();
-        }
+    }
+
+    private void ResetState()
+    {
+        isActive = false;
+        ownerSkill = null;
     }
 
     private void ReturnToPool()
     {
-        isActive = false;
-        ownerSkill = null;
-        ProjectilePooling.Instance.Return(this);
+        if (!isActive) return;
+
+        ResetState();
+        ownerPool.Return(this);
     }
 }

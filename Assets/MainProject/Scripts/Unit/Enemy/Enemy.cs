@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
+
 public class Enemy : Unit
 {
     private Transform target;
@@ -13,7 +13,7 @@ public class Enemy : Unit
 
     [Header("데미지 세팅")]
     public float Damage;
-    public float Damage_Interval; // 1초마다
+    public float Damage_Interval;
 
     private float DamageTimer;
     private bool isTouchingPlayer;
@@ -46,7 +46,7 @@ public class Enemy : Unit
     {
         if (isDead) return;
 
-        StopAllCoroutines(); // 기존 연출 중지 (안전)
+        StopAllCoroutines(); // 기존 연출 중지
         StartCoroutine(KnockbackRoutine(dir, force));
     }
 

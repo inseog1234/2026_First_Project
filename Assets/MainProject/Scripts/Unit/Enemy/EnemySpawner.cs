@@ -120,8 +120,6 @@ public class EnemySpawner : MonoBehaviour
 
                 Vector2 pos = GetRandomEdgePosition();
                 EnemyPooling.Instance.Get(b.prefab, pos);
-
-                Debug.Log($"MiniBoss Spawned : {b.prefab.name}");
                 break;
             }
         }

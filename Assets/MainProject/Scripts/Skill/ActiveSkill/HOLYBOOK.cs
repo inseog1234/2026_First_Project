@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class HOLYBOOK : ActiveSkill
 {
-    private List<Projectile> books = new();
+    private readonly List<Projectile> books = new();
     private float angle;
     private float radius;
     private float rotateSpeed;
     private float lifeTime;
     private float damage;
 
+    private Coroutine lifeRoutine;
+
     public HOLYBOOK(SkillData data, SkillController owner) : base(data, owner) {}
 
     protected override void Cast()
     {
+        EnsureProjectilePool(10, ProjectileParentType.Owner);
+
+        if (lifeRoutine != null)
+            owner.StopCoroutine(lifeRoutine);
+
         int count = GetFinalProjectileCount() + owner.GlobalStats.projectileBonus;
 
         radius = GetFinalRange();
@@ -27,8 +34,8 @@ public class HOLYBOOK : ActiveSkill
 
         SpawnBooks(count);
 
-        owner.StartCoroutine(LifeRoutine());
-        
+        lifeRoutine = owner.StartCoroutine(LifeRoutine());
+
         owner.OnSkillUpdate -= UpdateOrbit;
         owner.OnSkillUpdate += UpdateOrbit;
     }
@@ -45,13 +52,22 @@ public class HOLYBOOK : ActiveSkill
                 Mathf.Sin(a * Mathf.Deg2Rad)
             ) * radius;
 
-            Projectile p = ProjectilePooling.Instance.Get(data.projectilePrefab);
+            Projectile p = projectilePool.Get();
             p.transform.position = owner.transform.position + (Vector3)offset;
-            p.transform.SetParent(owner.transform);
 
-            p.Init(Vector2.zero, damage, 0f, lifeTime, 0f, this, 0, false, true);
+            p.Init(
+                Vector2.zero,
+                damage,
+                0f,
+                lifeTime,
+                0f,
+                this,
+                projectilePool,
+                0,
+                false,
+                true
+            );
 
-            p.transform.rotation = Quaternion.identity;
             books.Add(p);
         }
     }
@@ -62,7 +78,8 @@ public class HOLYBOOK : ActiveSkill
 
         for (int i = 0; i < books.Count; i++)
         {
-            if (books[i] == null) continue;
+            Projectile p = books[i];
+            if (p == null) continue;
 
             float a = angle + 360f / books.Count * i;
             Vector2 pos = new Vector2(
@@ -70,8 +87,7 @@ public class HOLYBOOK : ActiveSkill
                 Mathf.Sin(a * Mathf.Deg2Rad)
             ) * radius;
 
-            books[i].transform.position = owner.transform.position + (Vector3)pos;
-            books[i].transform.rotation = Quaternion.identity;
+            p.transform.position = owner.transform.position + (Vector3)pos;
         }
     }
 
@@ -84,9 +100,10 @@ public class HOLYBOOK : ActiveSkill
         for (int i = 0; i < books.Count; i++)
         {
             if (books[i] != null)
-                ProjectilePooling.Instance.Return(books[i]);
+                projectilePool.Return(books[i]);
         }
 
         books.Clear();
+        lifeRoutine = null;
     }
 }

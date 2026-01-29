@@ -1,8 +1,19 @@
+using UnityEngine;
+
+[System.Serializable]
+public class Pool
+{
+    public UnityEngine.GameObject prefab;
+    public int size;
+}
+
 public abstract class ActiveSkill
 {
     protected SkillData data;
     public SkillData Data => data;
     protected SkillController owner;
+
+    protected SkillProjectilePool projectilePool;
 
     protected float cooldownTimer;
     protected int level = 1;
@@ -13,17 +24,31 @@ public abstract class ActiveSkill
 
     protected float time;
     public float Time => time;
-
-
+    
     protected SkillStat currentStat;
 
-    public ActiveSkill(SkillData data, SkillController owner)
+    protected ActiveSkill(SkillData data, SkillController owner)
     {
         this.data = data;
         this.owner = owner;
-       
-        currentStat = data.baseStat;
+
+        currentStat = data.baseStat.Clone();
         cooldownTimer = 0f;
+    }
+
+    protected void EnsureProjectilePool(int poolCount, ProjectileParentType parentType)
+    {
+        if (projectilePool != null) return;
+
+        if (data.projectilePrefab == null)
+        {
+            Debug.LogError(
+                $"[{GetType().Name}] projectilePrefab is NULL in SkillData ({data.skillName})"
+            );
+            return;
+        }
+
+        projectilePool = new SkillProjectilePool(data.projectilePrefab, owner.transform, poolCount, parentType);
     }
 
     public void Tick(float dt)
@@ -38,45 +63,15 @@ public abstract class ActiveSkill
     }
 
     protected abstract void Cast();
-
-    protected float GetFinalCooldown()
-    {
-        return currentStat.cooldown * owner.GlobalStats.cooldownMultiplier;
-    }
-
-    protected float GetFinalDamage()
-    {
-        return currentStat.baseDamage * owner.GlobalStats.damageMultiplier;
-    }
-
-    protected float GetFinalRange()
-    {
-        return currentStat.range;
-    }
-
-    protected float GetFinalSpeed()
-    {
-        return currentStat.speed;
-    }
-
-    protected float GetFinalLifetime()
-    {
-        return currentStat.lifetime;
-    }
-
-    protected float GetFinalKnockback()
-    {
-        return currentStat.knockback;
-    }
-
-    protected int GetFinalProjectileCount()
-    {
-        return currentStat.projectileCount;
-    }
-    protected float GetFinalProjectileDelay()
-    {
-        return currentStat.projectilefiring_Delay;
-    }
+    
+    protected float GetFinalCooldown() => currentStat.cooldown * owner.GlobalStats.cooldownMultiplier;
+    protected float GetFinalDamage() => currentStat.baseDamage * owner.GlobalStats.damageMultiplier;
+    protected float GetFinalRange() => currentStat.range;
+    protected float GetFinalSpeed() => currentStat.speed;
+    protected float GetFinalLifetime() => currentStat.lifetime;
+    protected float GetFinalKnockback() => currentStat.knockback;
+    protected int GetFinalProjectileCount() => currentStat.projectileCount;
+    protected float GetFinalProjectileDelay() => currentStat.projectilefiring_Delay;
 
     public void AddDamage(float dmg)
     {
@@ -86,19 +81,8 @@ public abstract class ActiveSkill
     public void LevelUp()
     {
         if (level >= data.maxLevel) return;
-
-        SkillStat add = data.levelUpStats[level-1];
-
-        currentStat.baseDamage += add.baseDamage;
-        currentStat.cooldown += add.cooldown;
-        currentStat.lifetime += add.lifetime;
-        currentStat.range += add.range;
-        currentStat.speed += add.speed;
-        currentStat.scale += add.scale;
-        currentStat.knockback += add.knockback;
-        currentStat.projectileCount += add.projectileCount;
-        currentStat.projectilefiring_Delay += add.projectilefiring_Delay;
-
+        
+        currentStat.Add(data.levelUpStats[level - 1]);
         level++;
     }
 }

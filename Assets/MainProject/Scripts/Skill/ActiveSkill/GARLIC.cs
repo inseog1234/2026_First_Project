@@ -7,23 +7,24 @@ public class GARLIC : ActiveSkill
     private float timer;
 
     private GarlicSkillData gData;
-
-    // 이걸로 초기화 했는지 확인할거잉ㅇ
     private bool initialized;
     private GarlicAuraVisual visual;
+    private readonly Collider2D[] hitBuffer = new Collider2D[100];
+    private int enemyMask;
 
     public GARLIC(SkillData data, SkillController owner) : base(data, owner)
     {
         gData = (GarlicSkillData)data;
+        enemyMask = LayerMask.GetMask("Enemy");
     }
 
     protected override void Cast()
     {
-        // 초기화 한번만 할래요
         if (initialized)
         {
             radius = GetFinalRange();
-            if (visual != null) visual.SetRadius(radius);
+            if (visual != null)
+                visual.SetRadius(radius);
             return;
         }
 
@@ -33,9 +34,9 @@ public class GARLIC : ActiveSkill
         tickInterval = gData.tickInterval;
         timer = 0f;
 
-        // 시각 오브젝트 생성 1회
+        // 시각 오브젝트 1회 생성 --왜 자꾸 생성되느느가검?????????????????????--
         GameObject go = new GameObject("GarlicAura");
-        go.transform.SetParent(owner.transform);
+        go.transform.SetParent(owner.transform, false);
 
         var sr = go.AddComponent<SpriteRenderer>();
         sr.sprite = gData.auraSprite;
@@ -45,34 +46,41 @@ public class GARLIC : ActiveSkill
         visual = go.AddComponent<GarlicAuraVisual>();
         visual.Init(owner, radius);
 
-        // 스킬 중복 추가 금지
-        owner.OnSkillUpdate -= UpdateAura;
         owner.OnSkillUpdate += UpdateAura;
     }
 
     private void UpdateAura(float dt)
     {
         timer -= dt;
-        if (timer > 0) return;
+        if (timer > 0f) return;
 
         timer = tickInterval;
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(
-            owner.transform.position,
-            radius,
-            LayerMask.GetMask("Enemy")
-        );
+        // 이거 고민좀 해봐야 하는데 일단 NonAlloc 씀
+        int count = Physics2D.OverlapCircleNonAlloc(owner.transform.position, radius, hitBuffer, enemyMask);
 
-        foreach (var hit in hits)
+        float damage = GetFinalDamage();
+        float knockback = GetFinalKnockback();
+        Vector2 origin = owner.transform.position;
+
+        for (int i = 0; i < count; i++)
         {
-            Enemy e = hit.GetComponent<Enemy>();
-            if (e == null) continue;
+            Enemy e = hitBuffer[i].GetComponent<Enemy>();
+            if (e == null || e.isDead) continue;
 
-            e.TakeDamage(GetFinalDamage());
-            AddDamage(GetFinalDamage());
+            e.TakeDamage(damage);
+            AddDamage(damage);
 
-            Vector2 dir = ((Vector2)e.transform.position - (Vector2)owner.transform.position).normalized;
-            e.Knockback(dir, data.baseStat.knockback);
+            if (knockback > 0f)
+            {
+                Vector2 dir = ((Vector2)e.transform.position - origin).normalized;
+                e.Knockback(dir, knockback);
+            }
         }
+    }
+
+    public void Dispose()
+    {
+        owner.OnSkillUpdate -= UpdateAura;
     }
 }

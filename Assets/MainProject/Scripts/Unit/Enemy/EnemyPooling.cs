@@ -46,7 +46,6 @@ public class EnemyPooling : MonoBehaviour
         Enemy e = poolDict[prefab].Dequeue();
         if (e == null)
         {
-            Debug.LogError("EnemyPool: Enemy is null");
             return null;
         }
 
