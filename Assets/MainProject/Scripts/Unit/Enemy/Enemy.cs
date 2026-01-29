@@ -25,6 +25,16 @@ public class Enemy : Unit
         target_Offset = target.GetComponent<Unit>().Get_Offset();
     }
 
+    private void OnEnable()
+    {
+        EnemyManager.Register(this);
+    }
+
+    private void OnDisable()
+    {
+        EnemyManager.Unregister(this);
+    }
+
     protected override void Update()
     {
         base.Update();

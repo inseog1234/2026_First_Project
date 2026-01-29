@@ -17,7 +17,7 @@ public class HOLYBOOK : ActiveSkill
 
     protected override void Cast()
     {
-        EnsureProjectilePool(10, ProjectileParentType.Owner);
+        EnsureProjectilePool(20, ProjectileParentType.Owner);
 
         if (lifeRoutine != null)
             owner.StopCoroutine(lifeRoutine);

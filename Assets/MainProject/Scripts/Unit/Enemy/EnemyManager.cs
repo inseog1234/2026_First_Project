@@ -1,16 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static readonly List<Enemy> ActiveEnemies = new();
+
+    public static void Register(Enemy enemy)
     {
-        
+        if (enemy == null) return;
+        ActiveEnemies.Add(enemy);
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void Unregister(Enemy enemy)
     {
-        
+        if (enemy == null) return;
+        ActiveEnemies.Remove(enemy);
     }
 }
