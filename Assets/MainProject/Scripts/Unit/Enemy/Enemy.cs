@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using PlayerControll;
 using UnityEngine;
 
 
 public class Enemy : Unit
 {
-    private Transform target;
+    private Unit target;
     private Vector2 target_Offset;
 
     public Enemy prefabKey { get; private set; }
@@ -24,8 +25,8 @@ public class Enemy : Unit
     protected override void Start()
     {
         base.Start();
-        target = GameObject.FindWithTag("Player").transform;
-        target_Offset = target.GetComponent<Unit>().Get_Offset();
+        target = Player.Instance;
+        target_Offset = Player.Instance.Get_Offset();
     }
 
     private void OnEnable()
@@ -52,7 +53,7 @@ public class Enemy : Unit
     {
         if (target == null) return;
 
-        _MoveDirect = (target.position + new Vector3(0, target_Offset.y) - transform.position).normalized;
+        _MoveDirect = (target.transform.position + new Vector3(0, target_Offset.y) - transform.position).normalized;
     }
 
     public void Knockback(Vector2 dir, float force)
@@ -84,7 +85,7 @@ public class Enemy : Unit
         DamageTimer -= Time.deltaTime;
         if (DamageTimer <= 0f)
         {
-            target.GetComponent<Unit>().TakeDamage(Damage);
+            target.TakeDamage(Damage);
             DamageTimer = Damage_Interval;
         }
     }

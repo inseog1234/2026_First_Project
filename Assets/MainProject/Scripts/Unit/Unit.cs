@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    protected Rigidbody2D _rb;
-    protected SpriteRenderer _sr;
-    protected Animator _am;
+    [SerializeField] protected Rigidbody2D _rb;
+    [SerializeField] protected SpriteRenderer _sr;
+    [SerializeField] protected Animator _am;
     protected Vector2 _MoveDirect;
     protected Vector2 _AtkDirect;
     protected bool isKnockbacking;
@@ -18,20 +18,25 @@ public class Unit : MonoBehaviour
     [SerializeField] protected Vector2 offset;
     [SerializeField] protected Vector2 offsetProperty;
 
+    private MaterialPropertyBlock _mpb;
+    private static readonly int HitValueID = Shader.PropertyToID("_Value");
+
+    private static readonly int AnimIDMove = Animator.StringToHash("isMove");
+
     protected float _AttackCoolTime_Timer;
     protected bool _isAttackPossible;
     
     public bool isDead {get; protected set;}
     private float hitValue;
 
+    private void Awake()
+    {
+        _mpb = new MaterialPropertyBlock();
+    }
+
     protected virtual void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _sr = GetComponentInChildren<SpriteRenderer>();
-        _am = GetComponentInChildren<Animator>();
-
         offsetProperty = offset;
-
         Hp = MaxHp;
     }
 
@@ -44,13 +49,21 @@ public class Unit : MonoBehaviour
     protected void UpdateAnimation()
     {
         bool isMoving = _MoveDirect.sqrMagnitude > 0.01f;
-        _am.SetBool("isMove", isMoving);
+
+        _am.SetBool(AnimIDMove, isMoving);
         
-
-        hitValue = Mathf.MoveTowards(hitValue, 0f, Time.deltaTime * 3f);
-        _sr.material.SetFloat("_Value", hitValue);
-        _sr.material.SetTexture("_Texture2D", _sr.sprite.texture);
-
+        
+        if (hitValue > 0f)
+        {
+            if (hitValue > 0.05f)
+                hitValue = Mathf.MoveTowards(hitValue, 0f, Time.deltaTime * 3f);
+            else
+                hitValue = 0;
+            
+            _sr.GetPropertyBlock(_mpb);
+            _mpb.SetFloat(HitValueID, hitValue);
+            _sr.SetPropertyBlock(_mpb);
+        }
     }
 
     protected virtual void Move()
@@ -60,6 +73,7 @@ public class Unit : MonoBehaviour
         _rb.MovePosition(
             _rb.position + _MoveDirect.normalized * _MoveSpeed * Time.fixedDeltaTime * 5f
         );
+
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
 

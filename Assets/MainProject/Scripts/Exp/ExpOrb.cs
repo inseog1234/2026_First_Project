@@ -18,8 +18,8 @@ public class ExpOrb : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;
-        offset = player.GetComponent<Player>().Get_Offset();
+        player = Player.Instance.transform;
+        offset = Player.Instance.Get_Offset();
     }
 
     private void Update()
@@ -64,7 +64,7 @@ public class ExpOrb : MonoBehaviour
 
     private void Collect()
     {
-        player.GetComponent<Player>().AddExp(expValue);
+        Player.Instance.AddExp(expValue);
         ExpOrbPooling.Instance.Return(this);
     }
 }

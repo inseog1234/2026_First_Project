@@ -181,6 +181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39baff3941141a449abd279b2f8d2a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  _rb: {fileID: 151583349833830670}
+  _sr: {fileID: 2350279283985073345}
+  _am: {fileID: 4711619869740093055}
   Hp: 0
   _MoveSpeed: 0.22
   MaxHp: 8

@@ -16,23 +16,29 @@ namespace PlayerControll
         [Header("UI")]
         [SerializeField] private SkillSelectUI skillUI;
 
-        private Player_Input _input;
-        private SkillController _skillController;
+        [SerializeField] private Player_Input _input;
+        [SerializeField] private SkillController _skillController;
         
 
         public float curExp {get; private set;}
         public float maxExp {get; private set;}
         public int Level {get; private set;}
-        public static Player Instance;
+
+        public static Player Instance {get; private set;}
 
         private void Awake()
         {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             Instance = this;
         }
+
         protected override void Start()
         {
-            _input = GetComponent<Player_Input>();
-            _skillController = GetComponent<SkillController>();
 
             base.Start();
 

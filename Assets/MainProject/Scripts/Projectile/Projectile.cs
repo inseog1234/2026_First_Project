@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour
     {
         if (!isActive) return;
 
-        transform.position += (Vector3)(dir * speed * Time.deltaTime);
+        transform.position += (Vector3)(dir * (speed * Time.deltaTime));
 
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0f)

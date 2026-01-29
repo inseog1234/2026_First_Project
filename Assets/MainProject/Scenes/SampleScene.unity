@@ -1014,6 +1014,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0135ad2fdd8dcc04196099a8fb88530b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControll.Player
+  _rb: {fileID: 155521330}
+  _sr: {fileID: 155521326}
+  _am: {fileID: 155521332}
   Hp: 0
   _MoveSpeed: 0.8
   MaxHp: 20
@@ -1022,6 +1025,8 @@ MonoBehaviour:
   First_Max_Exp: 4
   _ui: {fileID: 155521336}
   skillUI: {fileID: 1265626802}
+  _input: {fileID: 155521329}
+  _skillController: {fileID: 155521333}
 --- !u!95 &155521332
 Animator:
   serializedVersion: 7
