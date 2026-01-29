@@ -8,6 +8,9 @@ public class Enemy : Unit
     private Transform target;
     private Vector2 target_Offset;
 
+    public Enemy prefabKey { get; private set; }
+    public void SetPrefabKey(Enemy key) => prefabKey = key;
+
     [Header("경험치")]
     public int expValue = 1;
 

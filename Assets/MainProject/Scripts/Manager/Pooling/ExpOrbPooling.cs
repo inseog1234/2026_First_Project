@@ -15,7 +15,7 @@ public class ExpOrbPooling : MonoBehaviour
 
     public OrbPool[] pools;
 
-    private Dictionary<int, Queue<ExpOrb>> poolDict = new();
+    private readonly Dictionary<int, ObjectPool<ExpOrb>> poolDict = new();
 
     private void Awake()
     {
@@ -23,51 +23,49 @@ public class ExpOrbPooling : MonoBehaviour
 
         foreach (var p in pools)
         {
-            Queue<ExpOrb> q = new();
+            if (p.prefab == null || p.size <= 0) continue;
 
-            for (int i = 0; i < p.size; i++)
-            {
-                ExpOrb e = Instantiate(p.prefab, transform);
-                e.expValue = p.expValue;
-                e.gameObject.SetActive(false);
-                q.Enqueue(e);
-            }
+            int key = p.expValue;
 
-            poolDict.Add(p.expValue, q);
+            var pool = new ObjectPool<ExpOrb>(
+                p.prefab,
+                p.size,
+                transform,
+                poolName: $"{p.prefab.name}_{key}_Pool",
+                onGet: (orb) => { orb.expValue = key; }
+            );
+
+            poolDict[key] = pool;
         }
     }
 
-    // ==========================
-    // 값에 따라 자동 선택
-    // ==========================
     public ExpOrb Get(Vector2 pos, int value)
     {
         int key = GetOrbValue(value);
 
-        if (!poolDict.ContainsKey(key))
-        {
-            Debug.LogError($"ExpOrbPool 없음: {key}");
-            return null;
-        }
+        if (!poolDict.TryGetValue(key, out var pool)) return null;
 
-        ExpOrb e = poolDict[key].Dequeue();
-        poolDict[key].Enqueue(e);
-
+        ExpOrb e = pool.Get();
         e.transform.position = pos;
         e.expValue = key;
-        e.gameObject.SetActive(true);
 
         return e;
     }
 
     public void Return(ExpOrb e)
     {
+        if (e == null) return;
+
+        int key = GetOrbValue((int)e.expValue);
+        if (poolDict.TryGetValue(key, out var pool))
+        {
+            pool.Return(e);
+            return;
+        }
+
         e.gameObject.SetActive(false);
     }
 
-    // ==========================
-    // 가장 가까운 오브 타입 선택
-    // ==========================
     private int GetOrbValue(int value)
     {
         if (value >= 1000) return 1000;
