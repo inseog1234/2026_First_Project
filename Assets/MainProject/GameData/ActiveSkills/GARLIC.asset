@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6507fce75692e3b429b417b46058e875, type: 3}
   projectilePrefab: {fileID: 0}
   baseStat:
-    baseDamage: 0.1
+    baseDamage: 0.5
     cooldown: 0
     lifetime: 999
     range: 1
@@ -28,34 +28,7 @@ MonoBehaviour:
     projectileCount: 0
     projectilefiring_Delay: 0
   levelUpStats:
-  - baseDamage: 0.05
-    cooldown: 0
-    lifetime: 0
-    range: 0.15
-    speed: 0
-    scale: 0
-    knockback: 0
-    projectileCount: 0
-    projectilefiring_Delay: 0
-  - baseDamage: 0.05
-    cooldown: 0
-    lifetime: 0
-    range: 0.15
-    speed: 0
-    scale: 0
-    knockback: 0
-    projectileCount: 0
-    projectilefiring_Delay: 0
-  - baseDamage: 0.05
-    cooldown: 0
-    lifetime: 0
-    range: 0.15
-    speed: 0
-    scale: 0
-    knockback: 0
-    projectileCount: 0
-    projectilefiring_Delay: 0
-  - baseDamage: 0.05
+  - baseDamage: 0.1
     cooldown: 0
     lifetime: 0
     range: 0.15
@@ -91,7 +64,34 @@ MonoBehaviour:
     knockback: 0
     projectileCount: 0
     projectilefiring_Delay: 0
-  - baseDamage: 0.3
+  - baseDamage: 0.1
+    cooldown: 0
+    lifetime: 0
+    range: 0.15
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0.2
+    cooldown: 0
+    lifetime: 0
+    range: 0.15
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0.2
+    cooldown: 0
+    lifetime: 0
+    range: 0.15
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0.6
     cooldown: 0
     lifetime: 0
     range: 0.25
@@ -100,7 +100,7 @@ MonoBehaviour:
     knockback: 0
     projectileCount: 0
     projectilefiring_Delay: 0
-  - baseDamage: 0.3
+  - baseDamage: 0.6
     cooldown: 0
     lifetime: 0
     range: 0.25
@@ -109,7 +109,7 @@ MonoBehaviour:
     knockback: 0
     projectileCount: 0
     projectilefiring_Delay: 0
-  - baseDamage: 0.5
+  - baseDamage: 1
     cooldown: 0
     lifetime: 0
     range: 0.3
@@ -120,4 +120,4 @@ MonoBehaviour:
     projectilefiring_Delay: 0
   auraSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   auraColor: {r: 0.3962263, g: 0.13207541, b: 0, a: 0.35686275}
-  tickInterval: 0.3
+  tickInterval: 0.2
