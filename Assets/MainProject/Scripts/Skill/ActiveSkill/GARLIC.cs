@@ -9,7 +9,6 @@ public class GARLIC : ActiveSkill
     private GarlicSkillData gData;
     private bool initialized;
     private GarlicAuraVisual visual;
-    private readonly Collider2D[] hitBuffer = new Collider2D[100];
     private int enemyMask;
 
     public GARLIC(SkillData data, SkillController owner) : base(data, owner)
@@ -56,26 +55,25 @@ public class GARLIC : ActiveSkill
 
         timer = tickInterval;
 
-        // 이거 고민좀 해봐야 하는데 일단 NonAlloc 씀
-        int count = Physics2D.OverlapCircleNonAlloc(owner.transform.position, radius, hitBuffer, enemyMask);
+        // 결국엔 EnemyManager를 만들어서 관리
+        Vector2 center = owner.transform.position;
+        float radiusSqr = radius * radius;
 
         float damage = GetFinalDamage();
         float knockback = GetFinalKnockback();
-        Vector2 origin = owner.transform.position;
 
-        for (int i = 0; i < count; i++)
+        foreach (Enemy e in EnemyManager.ActiveEnemies)
         {
-            Enemy e = hitBuffer[i].GetComponent<Enemy>();
             if (e == null || e.isDead) continue;
+
+            Vector2 diff = (Vector2)e.transform.position - center;
+            if (diff.sqrMagnitude > radiusSqr) continue;
 
             e.TakeDamage(damage);
             AddDamage(damage);
 
             if (knockback > 0f)
-            {
-                Vector2 dir = ((Vector2)e.transform.position - origin).normalized;
-                e.Knockback(dir, knockback);
-            }
+                e.Knockback(diff.normalized, knockback);
         }
     }
 
