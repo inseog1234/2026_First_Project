@@ -38,7 +38,7 @@ public class RoomManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(Session.CurrentRoomId))
         {
-            Debug.LogError("Session.CurrentRoomId가 비어있음. 로비에서 방 입장 후 Room 씬으로 와야 함.");
+            Debug.LogError("Session.CurrentRoomId가 비어있음. 로비에서 방 입장 후 Room 씬으로 와야 함");
             return;
         }
 
@@ -82,18 +82,6 @@ public class RoomManager : MonoBehaviour
             next[p.player_id] = p;
         }
 
-        foreach (var kv in next)
-        {
-            if (!current.ContainsKey(kv.Key))
-                AddSystemLog($"{kv.Value.player_name}님이 들어왔습니다.");
-        }
-
-        foreach (var kv in current)
-        {
-            if (!next.ContainsKey(kv.Key))
-                AddSystemLog($"{kv.Value.player_name}님이 나가셨습니다.");
-        }
-
         current.Clear();
         foreach (var kv in next) current[kv.Key] = kv.Value;
 
@@ -119,11 +107,6 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    void AddSystemLog(string msg)
-    {
-        chatLog.AddSystem(msg);
-    }
-
     public void OnClickLeave()
     {
         _ = LeaveAndGoLobby();
@@ -136,7 +119,7 @@ public class RoomManager : MonoBehaviour
 
         try
         {
-            await supa.LeaveRoomRaw(Session.CurrentRoomId, PlayerIdentity.PlayerId);
+            await supa.LeaveRoomRaw(Session.CurrentRoomId, LocalProfile.Id);
         }
         catch (Exception e)
         {

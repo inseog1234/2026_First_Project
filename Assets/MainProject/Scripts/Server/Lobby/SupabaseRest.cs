@@ -44,7 +44,7 @@ public class SupabaseRest : MonoBehaviour
     }
 
     // 방 만들기
-    public Task<string> CreateRoomRaw(string name, string ownerName, long maxPlayers, string passwordOrNull)
+    public Task<string> CreateRoomRaw(string name, string ownerName, long maxPlayers, string passwordOrNull, string hostIp, int hostPort)
     {
         string url = $"{RestBase}/rooms";
         var body =
@@ -52,7 +52,9 @@ public class SupabaseRest : MonoBehaviour
             $"\"name\":{JsonStr(name)}," +
             $"\"owner_name\":{JsonStr(ownerName)}," +
             $"\"max_players\":{maxPlayers}," +
-            $"\"password_hash\":{JsonNullableStr(passwordOrNull)}" +
+            $"\"password_hash\":{JsonNullableStr(passwordOrNull)}," +
+            $"\"host_ip\":{JsonStr(hostIp)}," +
+            $"\"host_port\":{hostPort}" +
             $"}}";
 
         var req = Req(url, "POST", body);
@@ -75,6 +77,14 @@ public class SupabaseRest : MonoBehaviour
         var body = $"{{\"p_room_id\":\"{roomId}\",\"p_player_id\":\"{playerId}\"}}";
         return Send(Req(url, "POST", body));
     }
+
+    // 방 정보 조회
+    public Task<string> GetRoomByIdRaw(string roomId)
+    {
+        string url = $"{RestBase}/rooms?select=id,name,owner_name,max_players,password_hash,host_ip,host_port&id=eq.{roomId}&limit=1";
+        return Send(Req(url, "GET"));
+    }
+
 
     // 방 플레이어 목록 가져오기
     public Task<string> GetRoomPlayersRaw(string roomId)

@@ -13,7 +13,7 @@ public class SceneTransitionController : MonoBehaviour
     [SerializeField] GridLayoutGroup grid;
     [SerializeField] Image tilePrefab;
 
-    [Header("그리드 설정")]
+    [Header("격자 설정")]
     [SerializeField] int columns = 10;
     [SerializeField] int rows = 5;
 

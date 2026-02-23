@@ -17,6 +17,9 @@ public class RoomRow
 
 public class LobbyManager : MonoBehaviour
 {
+    [Header("방 호스트 설정")]
+    [SerializeField] int hostPort;
+
     [Header("기본 참조")]
     [SerializeField] SupabaseRest supa;
     [SerializeField] Transform serverListContent;
@@ -37,10 +40,12 @@ public class LobbyManager : MonoBehaviour
 
     string pendingJoinRoomId;
     string pendingJoinRoomName;
-    long createMaxPlayers = 1;
+    long createMaxPlayers;
 
     async void Start()
     {
+        createMaxPlayers = 2;
+
         if (joinRoomPopup) joinRoomPopup.SetActive(false);
         if (createRoomPopup) createRoomPopup.SetActive(false);
 
@@ -78,7 +83,6 @@ public class LobbyManager : MonoBehaviour
     {
         if (room == null) return;
 
-        // 비번방이면 팝업 띄움
         if (!string.IsNullOrEmpty(room.password_hash))
         {
             pendingJoinRoomId = room.id;
@@ -91,7 +95,7 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
-        _ = TryJoin(room.id, room.name, null);
+        _ = TryJoin(room.id, room.name, null, false);
     }
 
     public void JoinRoomConfirm()
@@ -106,7 +110,7 @@ public class LobbyManager : MonoBehaviour
         var pw = joinPasswordInput ? joinPasswordInput.text : null;
         if (joinRoomPopup) joinRoomPopup.SetActive(false);
 
-        _ = TryJoin(pendingJoinRoomId, pendingJoinRoomName, pw);
+        _ = TryJoin(pendingJoinRoomId, pendingJoinRoomName, pw, false);
     }
 
     public void OpenJoinRoomPopup(bool open)
@@ -122,13 +126,13 @@ public class LobbyManager : MonoBehaviour
 
     public void PlusMaxPlayers()
     {
-        createMaxPlayers = Mathf.Clamp((int)createMaxPlayers + 1, 1, 99);
+        createMaxPlayers = Mathf.Clamp((int)createMaxPlayers + 1, 2, 99);
         if (createRoomMaxCountText) createRoomMaxCountText.text = createMaxPlayers.ToString();
     }
 
     public void MinusMaxPlayers()
     {
-        createMaxPlayers = Mathf.Clamp((int)createMaxPlayers - 1, 1, 99);
+        createMaxPlayers = Mathf.Clamp((int)createMaxPlayers - 1, 2, 99);
         if (createRoomMaxCountText) createRoomMaxCountText.text = createMaxPlayers.ToString();
     }
 
@@ -148,7 +152,14 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
-        string createdJson = await supa.CreateRoomRaw(name, PlayerIdentity.PlayerName, createMaxPlayers, string.IsNullOrEmpty(pw) ? null : pw);
+        string ip = NetUtil.GetLocalIPv4() ?? "127.0.0.1";
+
+        Session.IsHost = true;
+        Session.HostIp = ip;
+        Session.HostPort = hostPort;
+
+        if (createMaxPlayers < 2) createMaxPlayers = 2;
+        string createdJson = await supa.CreateRoomRaw(name, LocalProfile.Name, createMaxPlayers, string.IsNullOrEmpty(pw) ? null : pw, ip, hostPort);
         var createdArr = JsonArray<RoomRow>(createdJson);
 
         if (createdArr == null || createdArr.Count == 0)
@@ -161,15 +172,15 @@ public class LobbyManager : MonoBehaviour
 
         if (createRoomPopup) createRoomPopup.SetActive(false);
 
-        await TryJoin(created.id, created.name, string.IsNullOrEmpty(pw) ? null : pw);
+        await TryJoin(created.id, created.name, string.IsNullOrEmpty(pw) ? null : pw, true);
     }
 
-    async Task TryJoin(string roomId, string roomName, string passwordOrNull)
+    async Task TryJoin(string roomId, string roomName, string passwordOrNull, bool isHost)
     {
         string resultJson = await supa.JoinRoomRaw(
             roomId,
-            PlayerIdentity.PlayerId,
-            PlayerIdentity.PlayerName,
+            LocalProfile.Id,
+            LocalProfile.Name,
             passwordOrNull
         );
 
@@ -190,6 +201,7 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
+        Session.IsHost = isHost;
         Session.CurrentRoomId = roomId;
         Session.CurrentRoomName = roomName;
 
