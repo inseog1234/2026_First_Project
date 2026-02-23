@@ -22,8 +22,9 @@ public class SceneTransitionController : MonoBehaviour
     [SerializeField] float tileAnimTime = 0.12f;
     [SerializeField] float phaseGap = 0.05f;
 
-    RectTransform[,] tiles;
-    bool isBusy;
+    private RectTransform[,] tiles;
+    private bool[,] cleared;
+    private bool isBusy;
 
     void Awake()
     {
@@ -41,7 +42,7 @@ public class SceneTransitionController : MonoBehaviour
         BuildTiles();
     }
 
-    void OnValidate()
+    private void OnValidate()
     {
         if (grid != null)
         {
@@ -51,7 +52,7 @@ public class SceneTransitionController : MonoBehaviour
         }
     }
 
-    void BuildTiles()
+    private void BuildTiles()
     {
         if (tilesRoot == null || grid == null || tilePrefab == null) return;
 
@@ -71,9 +72,11 @@ public class SceneTransitionController : MonoBehaviour
             rt.localScale = Vector3.zero;
             tiles[y, x] = rt;
         }
+
+        cleared = new bool[rows, columns];
     }
 
-    void UpdateCellSize()
+    private void UpdateCellSize()
     {
         float w = Screen.width / (float)columns;
         float h = Screen.height / (float)rows;
@@ -120,7 +123,7 @@ public class SceneTransitionController : MonoBehaviour
             for (int x = 0; x < columns; x++)
             {
                 if (x + y == step)
-                    StartCoroutine(ScaleTile(tiles[y, x], Vector3.zero, Vector3.one, tileAnimTime));
+                    StartCoroutine(ScaleTile(tiles[y, x], tiles[y, x].localScale, Vector3.one, tileAnimTime));
             }
 
             yield return new WaitForSecondsRealtime(stepDelay);
@@ -131,6 +134,10 @@ public class SceneTransitionController : MonoBehaviour
 
     IEnumerator ClearFromCenter()
     {
+        for (int y = 0; y < rows; y++)
+            for (int x = 0; x < columns; x++)
+                cleared[y, x] = false;
+
         float cx = (columns - 1) / 2f;
         float cy = (rows - 1) / 2f;
 
@@ -149,8 +156,11 @@ public class SceneTransitionController : MonoBehaviour
             for (int x = 0; x < columns; x++)
             {
                 float d = Vector2.Distance(new Vector2(x, y), new Vector2(cx, cy));
-                if (d <= threshold && tiles[y, x].localScale.x > 0.01f)
-                    StartCoroutine(ScaleTile(tiles[y, x], Vector3.one, Vector3.zero, tileAnimTime));
+                if (d <= threshold && !cleared[y, x])
+                {
+                    cleared[y, x] = true;
+                    StartCoroutine(ScaleTile(tiles[y, x], tiles[y, x].localScale, Vector3.zero, tileAnimTime));
+                }
             }
 
             yield return new WaitForSecondsRealtime(stepDelay);
@@ -162,7 +172,6 @@ public class SceneTransitionController : MonoBehaviour
     IEnumerator ScaleTile(RectTransform rt, Vector3 from, Vector3 to, float time)
     {
         float t = 0f;
-        rt.localScale = from;
 
         while (t < 1f)
         {

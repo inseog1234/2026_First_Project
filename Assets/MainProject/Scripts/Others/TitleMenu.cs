@@ -13,8 +13,6 @@ public class TitleMenu : MonoBehaviour
     private void Start()
     {
         if (setNamePopup) setNamePopup.SetActive(false);
-
-        LocalProfile.ClearAllForTest();
     }
 
     public void OnClickMultiplayer()
