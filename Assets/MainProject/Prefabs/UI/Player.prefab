@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2805980055843030537}
   - component: {fileID: 9158480772194293436}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Name_TMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 9148665709019969332}
   - component: {fileID: 2857913237318602902}
   - component: {fileID: 5172453156330698343}
+  - component: {fileID: 4074236478543290418}
   m_Layer: 5
   m_Name: Player
   m_TagString: Untagged
@@ -213,3 +214,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
+--- !u!114 &4074236478543290418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5372493765949056157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9720b84ffc73d1945952097547274225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerListItemUI
+  nameTMP: {fileID: 9158480772194293436}
