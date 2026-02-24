@@ -1,18 +1,41 @@
 using System.Net;
+using System.Net.Sockets;
 
 public static class NetUtil
 {
     public static string GetLocalIPv4()
     {
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        // 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 왜 자꾸 127.0.0.1로 나옴?? 
+        
+        // 답은 구글이었고
+        try
+        {
+            using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.Connect("8.8.8.8", 65530);
+            var endPoint = socket.LocalEndPoint as IPEndPoint;
+            return endPoint?.Address.ToString();
+        }
+        catch { }
+
         try
         {
             foreach (var ip in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
-            {
-                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
                     return ip.ToString();
-            }
         }
         catch { }
+
         return null;
     }
 }
