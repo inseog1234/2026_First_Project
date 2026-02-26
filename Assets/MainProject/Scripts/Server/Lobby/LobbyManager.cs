@@ -17,6 +17,10 @@ public class RoomRow
 
 public class LobbyManager : MonoBehaviour
 {
+    [Header("Relay(중앙 서버)")]
+    [SerializeField] string relayHost = "mintcat.arheneos.com";
+    [SerializeField] int relayPort = 7878;
+
     [Header("방 호스트 설정")]
     [SerializeField] int hostPort;
 
@@ -141,6 +145,13 @@ public class LobbyManager : MonoBehaviour
         _ = CreateRoomConfirmAsync();
     }
 
+    public void EnsureRelay()
+    {
+        if (RelayChatClient.Instance != null) return;
+        var go = new GameObject("RelayChatClient");
+        go.AddComponent<RelayChatClient>();
+    }
+
     async Task CreateRoomConfirmAsync()
     {
         var name = createRoomName ? createRoomName.text.Trim() : "";
@@ -152,14 +163,12 @@ public class LobbyManager : MonoBehaviour
             return;
         }
 
-        string ip = NetUtil.GetLocalIPv4() ?? "127.0.0.1";
-
         Session.IsHost = true;
-        Session.HostIp = ip;
-        Session.HostPort = hostPort;
+        Session.HostIp = relayHost;
+        Session.HostPort = relayPort;
 
         if (createMaxPlayers < 2) createMaxPlayers = 2;
-        string createdJson = await supa.CreateRoomRaw(name, LocalProfile.Name, createMaxPlayers, string.IsNullOrEmpty(pw) ? null : pw, ip, hostPort);
+        string createdJson = await supa.CreateRoomRaw( name, LocalProfile.Name, createMaxPlayers, string.IsNullOrEmpty(pw) ? null : pw, relayHost, relayPort);
         var createdArr = JsonArray<RoomRow>(createdJson);
 
         if (createdArr == null || createdArr.Count == 0)
@@ -169,6 +178,22 @@ public class LobbyManager : MonoBehaviour
         }
 
         var created = createdArr[0];
+
+        // 릴레이 세션 생성 대기
+        if (RelayChatClient.Instance == null)
+        {
+            var go = new GameObject("RelayChatClient");
+            go.AddComponent<RelayChatClient>();
+        }
+        RelayChatClient.Instance.Configure(relayHost, relayPort);
+
+        bool relayOk = await RelayChatClient.Instance.ConnectAsync();
+        if (!relayOk)
+        {
+            Debug.LogError("릴레이 서버 연결 실패");
+            return;
+        }
+        await RelayChatClient.Instance.CreateRoomAsync(created.id, LocalProfile.Id, LocalProfile.Name);
 
         if (createRoomPopup) createRoomPopup.SetActive(false);
 

@@ -1,15 +1,10 @@
-using System;
-using System.Net;
 using UnityEngine;
+using WeZard.RelayProtocol;
 
 public class RoomChatBootstrap : MonoBehaviour
 {
-    [SerializeField] SupabaseRest supa;
-    [SerializeField] HostChatServer server;
-    [SerializeField] HostChatClient client;
-
-    [Header("설정")]
-    [SerializeField] int defaultPort = 7777;
+    [Header("Refs")]
+    [SerializeField] ChatLogTMP chatLog;
 
     async void Start()
     {
@@ -19,63 +14,40 @@ public class RoomChatBootstrap : MonoBehaviour
             return;
         }
 
+        var relay = RelayChatClient.Instance;
+        if (relay == null)
+        {
+           return;
+        }
+
+        relay.OnSystem -= OnSys;
+        relay.OnChat   -= OnChat;
+        relay.OnError  -= OnErr;
+
+        relay.OnSystem += OnSys;
+        relay.OnChat   += OnChat;
+        relay.OnError  += OnErr;
+
+        bool ok = await relay.ConnectAsync();
+        if (!ok) return;
+
         if (Session.IsHost)
-        {
-            string ip = !string.IsNullOrEmpty(Session.HostIp) ? Session.HostIp : (GetLocalIPv4() ?? "127.0.0.1");
-            int port = (Session.HostPort > 0) ? Session.HostPort : defaultPort;
+            await relay.CreateRoomAsync(Session.CurrentRoomId, LocalProfile.Id, LocalProfile.Name);
 
-            Session.HostIp = ip;
-            Session.HostPort = port;
-
-            server.StartServer(port, ip);
-            client.Connect(ip, port, LocalProfile.Name);
-            return;
-        }
-
-        try
-        {
-            string json = await supa.GetRoomByIdRaw(Session.CurrentRoomId);
-            var room = ParseSingleRoom(json);
-
-            Session.HostIp = room.host_ip;
-            Session.HostPort = room.host_port;
-
-            if (string.IsNullOrEmpty(Session.HostIp) || Session.HostPort <= 0)
-            {
-                Debug.LogError("방 host_ip/host_port가 비어있음. 방 생성 시 rooms에 저장됐는지 확인하셈");
-                return;
-            }
-
-            client.Connect(Session.HostIp, Session.HostPort, LocalProfile.Name);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("방 정보 조회/접속 실패: " + e.Message);
-        }
+        await relay.JoinRoomAsync(Session.CurrentRoomId, LocalProfile.Id, LocalProfile.Name);
     }
 
-    [Serializable]
-    class RoomInfo { public string host_ip; public int host_port; }
-
-    static RoomInfo ParseSingleRoom(string jsonArray)
+    void OnDestroy()
     {
-        string wrapped = "{\"items\":" + jsonArray + "}";
-        var w = JsonUtility.FromJson<Wrap<RoomInfo>>(wrapped);
-        return w.items[0];
-    }
-    [Serializable] class Wrap<T> { public System.Collections.Generic.List<T> items; }
+        var relay = RelayChatClient.Instance;
+        if (relay == null) return;
 
-    static string GetLocalIPv4()
-    {
-        try
-        {
-            foreach (var ip in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
-            {
-                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                    return ip.ToString();
-            }
-        }
-        catch { }
-        return null;
+        relay.OnSystem -= OnSys;
+        relay.OnChat   -= OnChat;
+        relay.OnError  -= OnErr;
     }
+
+    void OnSys(SysMsg m) => chatLog?.AddSystem(m.message);
+    void OnChat(ChatMsg m) => chatLog?.AddChat(m.playerName, m.message);
+    void OnErr(ErrMsg e) => chatLog?.AddSystem($"<color=#FF6666>{e.code}: {e.message}</color>");
 }
