@@ -79,7 +79,13 @@ namespace PlayerControll
             _ui.SetLevel(Level);
         }
 
-        void LevelUp()
+        public void NetSetHp(float hp)
+        {
+            Hp = hp;
+            _ui.SetHP(Hp, MaxHp);
+        }
+
+        private void LevelUp()
         {
             curExp = 0;
             maxExp *= 1.2f;
