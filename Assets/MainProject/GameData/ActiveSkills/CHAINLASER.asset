@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b7f3e278934e2192d168b7e923c80a, type: 3}
+  m_Name: CHAINLASER
+  m_EditorClassIdentifier: Assembly-CSharp::ChainLaserSkillData
+  skillID: 3
+  skillName: "\uC5F0\uC1C4 \uB808\uC774\uC800"
+  type: 0
+  icon: {fileID: -564504878191520670, guid: 1129030acaf763749ae61d0ca57e35f2, type: 3}
+  projectilePrefab: {fileID: 0}
+  baseStat:
+    baseDamage: 5
+    cooldown: 2.4
+    lifetime: 0.22
+    range: 6.5
+    speed: 12
+    scale: 1
+    knockback: 0.35
+    projectileCount: 3
+    projectilefiring_Delay: 0.055
+  levelUpStats:
+  - baseDamage: 0.8
+    cooldown: -0.05
+    lifetime: 0
+    range: 0
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0
+    cooldown: 0
+    lifetime: 0
+    range: 0
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 1
+    projectilefiring_Delay: 0
+  - baseDamage: 0
+    cooldown: -0.12
+    lifetime: 0
+    range: 0.6
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 1
+    cooldown: 0
+    lifetime: 0.02
+    range: 0
+    speed: 1
+    scale: 0.15
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0.5
+    cooldown: 0
+    lifetime: 0
+    range: 0
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 1
+    projectilefiring_Delay: -0.005
+  - baseDamage: 1.2
+    cooldown: 0
+    lifetime: 0
+    range: 0.7
+    speed: 1
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0
+    cooldown: -0.15
+    lifetime: 0
+    range: 0
+    speed: 0
+    scale: 0
+    knockback: 0.1
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  - baseDamage: 0.5
+    cooldown: 0
+    lifetime: 0.02
+    range: 0
+    speed: 1
+    scale: 0.2
+    knockback: 0
+    projectileCount: 1
+    projectilefiring_Delay: 0
+  - baseDamage: 1.8
+    cooldown: -0.18
+    lifetime: 0
+    range: 0.8
+    speed: 1
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: -0.005
+  - baseDamage: 0
+    cooldown: 0
+    lifetime: 0
+    range: 0
+    speed: 0
+    scale: 0
+    knockback: 0
+    projectileCount: 0
+    projectilefiring_Delay: 0
+  jumpRangeMultiplier: 0.72
+  damageFalloffPerJump: 0.12
+  minimumDamageMultiplier: 0.55
+  glowColor: {r: 0.05, g: 0.55, b: 1, a: 0.42}
+  coreColor: {r: 0.72, g: 0.95, b: 1, a: 1}
+  lineWidth: 0.08
+  glowWidthMultiplier: 3.4
+  jaggedPointCount: 7
+  jitterAmount: 0.16
+  impactPulseCount: 2

@@ -24,6 +24,8 @@ public class SkillController : MonoBehaviour
     [Header("모든 스킬 DB")]
     [SerializeField] private SkillData[] allSkillPool;
 
+    private SkillData[] runtimeSkillPool;
+
     // 런타임 스킬 인스턴스 보관
     private readonly List<ActiveSkill> activeSkills = new();
     private readonly List<PassiveSkill> passiveSkills = new();
@@ -33,6 +35,11 @@ public class SkillController : MonoBehaviour
     private readonly Dictionary<SkillData, PassiveSkill> passiveMap = new();
 
     public event Action<float> OnSkillUpdate;
+
+    private void Awake()
+    {
+        BuildRuntimeSkillPool();
+    }
 
     private void Start()
     {
@@ -58,6 +65,32 @@ public class SkillController : MonoBehaviour
         }
 
         OnSkillUpdate?.Invoke(dt);
+    }
+
+    private void BuildRuntimeSkillPool()
+    {
+        List<SkillData> merged = new();
+        HashSet<SkillData> seen = new();
+
+        AddSkills(allSkillPool, merged, seen);
+
+        SkillLibrary library = Resources.Load<SkillLibrary>("SkillLibrary");
+        if (library != null)
+            AddSkills(library.skills, merged, seen);
+
+        runtimeSkillPool = merged.ToArray();
+    }
+
+    private static void AddSkills(SkillData[] source, List<SkillData> destination, HashSet<SkillData> seen)
+    {
+        if (source == null) return;
+
+        for (int i = 0; i < source.Length; i++)
+        {
+            SkillData data = source[i];
+            if (data == null || !seen.Add(data)) continue;
+            destination.Add(data);
+        }
     }
 
     public void Set_Offset(Vector2 offset)
@@ -178,11 +211,12 @@ public class SkillController : MonoBehaviour
     {
         List<SkillData> list = new();
 
-        if (allSkillPool == null) return list;
+        if (runtimeSkillPool == null || runtimeSkillPool.Length == 0)
+            return list;
 
-        for (int i = 0; i < allSkillPool.Length; i++)
+        for (int i = 0; i < runtimeSkillPool.Length; i++)
         {
-            SkillData data = allSkillPool[i];
+            SkillData data = runtimeSkillPool[i];
             if (data == null) continue;
 
             if (data.type == SkillType.Active)
@@ -216,13 +250,13 @@ public class SkillController : MonoBehaviour
     public List<SkillData> GetRandomSkillList_Duplication(int count)
     {
         List<SkillData> result = new();
-        if (allSkillPool == null || allSkillPool.Length == 0 || count <= 0) return result;
+        if (runtimeSkillPool == null || runtimeSkillPool.Length == 0 || count <= 0) return result;
 
         // (성능 필요하면 여기서도 캐싱 가능)
-        List<SkillData> pool = new(allSkillPool.Length + activeSkills.Count + passiveSkills.Count);
+        List<SkillData> pool = new(runtimeSkillPool.Length + activeSkills.Count + passiveSkills.Count);
 
-        for (int i = 0; i < allSkillPool.Length; i++)
-            if (allSkillPool[i] != null) pool.Add(allSkillPool[i]);
+        for (int i = 0; i < runtimeSkillPool.Length; i++)
+            if (runtimeSkillPool[i] != null) pool.Add(runtimeSkillPool[i]);
 
         for (int i = 0; i < activeSkills.Count; i++)
             pool.Add(activeSkills[i].Data);
