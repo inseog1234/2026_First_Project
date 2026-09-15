@@ -31,8 +31,7 @@ public class ExpOrbPooling : MonoBehaviour
                 p.prefab,
                 p.size,
                 transform,
-                poolName: $"{p.prefab.name}_{key}_Pool",
-                onGet: (orb) => { orb.expValue = key; }
+                poolName: $"{p.prefab.name}_{key}_Pool"
             );
 
             poolDict[key] = pool;
@@ -47,14 +46,14 @@ public class ExpOrbPooling : MonoBehaviour
 
         ExpOrb e = pool.Get();
         e.transform.position = pos;
-        e.expValue = key;
+        e.Prepare(key);
 
         return e;
     }
 
     public void Return(ExpOrb e)
     {
-        if (e == null) return;
+        if (e == null || !e.gameObject.activeSelf) return;
 
         int key = GetOrbValue((int)e.expValue);
         if (poolDict.TryGetValue(key, out var pool))
