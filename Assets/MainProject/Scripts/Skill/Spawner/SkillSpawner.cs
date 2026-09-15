@@ -8,6 +8,7 @@ public static class SkillSpawner
             0 => new BunGaeHwaSal(data, owner),
             1 => new HOLYBOOK(data, owner),
             2 => new GARLIC(data, owner),
+            3 => new CHAINLASER(data, owner),
             _ => null
         };
     }
