@@ -70,11 +70,13 @@ public class Unit : MonoBehaviour
     {
         if (isKnockbacking) return;
 
-        _rb.MovePosition(
-            _rb.position + _MoveDirect.normalized * _MoveSpeed * Time.fixedDeltaTime * 5f
-        );
+        Vector2 moveDirection = _MoveDirect;
+        if (moveDirection.sqrMagnitude > 1f)
+            moveDirection.Normalize();
 
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+        _rb.MovePosition(
+            _rb.position + moveDirection * (_MoveSpeed * Time.fixedDeltaTime * 5f)
+        );
     }
 
     private void FixedUpdate()
