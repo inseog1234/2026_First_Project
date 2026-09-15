@@ -129,7 +129,7 @@ public class CHAINLASER : ActiveSkill
 
         float duration = Mathf.Max(0.08f, GetFinalLifetime());
         float elapsed = 0f;
-        float seed = Time.time * 13.37f + linkIndex * 7.11f;
+        float seed = UnityEngine.Time.time * 13.37f + linkIndex * 7.11f;
         float widthScale = Mathf.Max(0.25f, currentStat.scale);
         float baseWidth = laserData.lineWidth * widthScale;
         float visualSpeed = Mathf.Max(1f, GetFinalSpeed());
@@ -153,7 +153,7 @@ public class CHAINLASER : ActiveSkill
             glow.startColor = glow.endColor = glowColor;
             core.startColor = core.endColor = coreColor;
 
-            elapsed += Time.deltaTime;
+            elapsed += UnityEngine.Time.deltaTime;
             yield return null;
         }
 
@@ -195,7 +195,7 @@ public class CHAINLASER : ActiveSkill
             color.a *= alpha;
             ring.startColor = ring.endColor = color;
 
-            elapsed += Time.deltaTime;
+            elapsed += UnityEngine.Time.deltaTime;
             yield return null;
         }
 
