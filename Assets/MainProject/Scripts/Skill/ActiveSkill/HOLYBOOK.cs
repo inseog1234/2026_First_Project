@@ -18,26 +18,23 @@ public class HOLYBOOK : ActiveSkill
     protected override void Cast()
     {
         EnsureProjectilePool(20, ProjectileParentType.Owner);
+        if (projectilePool == null) return;
 
-        if (lifeRoutine != null)
-            owner.StopCoroutine(lifeRoutine);
+        CleanupCurrentBooks();
 
-        int count = GetFinalProjectileCount() + owner.GlobalStats.projectileBonus;
+        int count = Mathf.Max(1, GetFinalProjectileCount() + owner.GlobalStats.projectileBonus);
 
         radius = GetFinalRange();
         rotateSpeed = GetFinalSpeed() * 50f;
         lifeTime = GetFinalLifetime();
         damage = GetFinalDamage();
 
-        books.Clear();
         angle = 0f;
 
         SpawnBooks(count);
 
-        lifeRoutine = owner.StartCoroutine(LifeRoutine());
-
-        owner.OnSkillUpdate -= UpdateOrbit;
         owner.OnSkillUpdate += UpdateOrbit;
+        lifeRoutine = owner.StartCoroutine(LifeRoutine());
     }
 
     private void SpawnBooks(int count)
@@ -74,12 +71,14 @@ public class HOLYBOOK : ActiveSkill
 
     private void UpdateOrbit(float dt)
     {
+        if (books.Count == 0) return;
+
         angle += rotateSpeed * dt;
 
         for (int i = 0; i < books.Count; i++)
         {
             Projectile p = books[i];
-            if (p == null) continue;
+            if (p == null || !p.IsActive) continue;
 
             float a = angle + 360f / books.Count * i;
             Vector2 pos = new Vector2(
@@ -96,14 +95,30 @@ public class HOLYBOOK : ActiveSkill
         yield return new WaitForSeconds(lifeTime);
 
         owner.OnSkillUpdate -= UpdateOrbit;
+        ReleaseBooks();
+        lifeRoutine = null;
+    }
 
+    private void CleanupCurrentBooks()
+    {
+        if (lifeRoutine != null)
+        {
+            owner.StopCoroutine(lifeRoutine);
+            lifeRoutine = null;
+        }
+
+        owner.OnSkillUpdate -= UpdateOrbit;
+        ReleaseBooks();
+    }
+
+    private void ReleaseBooks()
+    {
         for (int i = 0; i < books.Count; i++)
         {
             if (books[i] != null)
-                projectilePool.Return(books[i]);
+                books[i].Release();
         }
 
         books.Clear();
-        lifeRoutine = null;
     }
 }

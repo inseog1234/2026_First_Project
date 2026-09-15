@@ -14,6 +14,8 @@ public class Projectile : MonoBehaviour
     private bool ignoreHitReturn;
     private bool isActive;
 
+    public bool IsActive => isActive;
+
     public void Init(Vector2 dir, float damage, float speed, float lifeTime, float knockback, ActiveSkill skill, 
     SkillProjectilePool pool, int pierce = 0, bool rotate = true, bool ignoreHitReturn = false)
     {
@@ -76,6 +78,11 @@ public class Projectile : MonoBehaviour
             pierce--;
         else
             ReturnToPool();
+    }
+
+    public void Release()
+    {
+        ReturnToPool();
     }
 
     private void ResetState()
